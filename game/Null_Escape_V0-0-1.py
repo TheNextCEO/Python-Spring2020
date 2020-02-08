@@ -6,8 +6,11 @@ import time
 
 pygame.init()
 
+# screen size parameters
 (width, height) = (970, 600)
 
+# setting the screen size
 screen = pygame.display.set_mode((width, height))
-while True:
-    pygame.display.update()
+
+# displays the screen
+pygame.display.update()
