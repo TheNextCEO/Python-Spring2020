@@ -229,7 +229,7 @@ class nullEscDBClass(object):
 
 
 if __name__=="__main__":
-    '''
+    ''' 
     This was all my testing for building this. Can use this as an example if one wishes
     dbTest = nullEscDBClass()
     dbTest.startDB("localhost", "nullEscUser", "notASecurePassword123")
