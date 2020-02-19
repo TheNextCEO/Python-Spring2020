@@ -191,39 +191,37 @@ class nullEscDBClass(object):
             return 0
         if user == 1 and self.isLoggedIn() == 0:
             return 2
-        commands = self.mydbCon.cursor()
+        '''I ran into a bug with the mysql not pulling right, turns out 'buffered=True' is need,
+        I found this solution here: https://stackoverflow.com/questions/29772337/python-mysql-connector-unread-result-found-when-using-fetchone'''
+        commands = self.mydbCon.cursor(buffered=True)
         sql = "SELECT * FROM gameScores WHERE game = %s"
         input = (game,)
         commands.execute(sql, input)
         result = commands.fetchone()
-        print(game)
         if self.is_empty(result) == 1 and game != "all":
             return 3
 
         if game == "all" and user == 0:
-            print("all-0")
-            sql = "SELECT uname, game, score FROM gameScores"
-            commands.execute(sql)
+            sql = "SELECT uname, game, score FROM gameScores ORDER BY score DESC LIMIT %s"
+            input = (amount,)
+            commands.execute(sql, input)
             result = commands.fetchall()
             return result
         elif game == "all" and user == 1:
-            print("all-1")
-            sql = "SELECT uname, game, score FROM gameScores WHERE uname = %s"
-            input = (self.unameGl,)
+            sql = "SELECT uname, game, score FROM gameScores WHERE uname = %s ORDER BY score DESC LIMIT %s"
+            input = (self.unameGl, amount,)
             commands.execute(sql, input)
             result = commands.fetchall()
             return result
         elif user == 1:
-            print("!all-1")
-            sql = "SELECT uname, game, score FROM gameScores WHERE uname = %s AND game = %s"
-            input = (self.unameGl, game,)
+            sql = "SELECT uname, game, score FROM gameScores WHERE uname = %s and game = %s ORDER BY score DESC LIMIT %s"
+            input = (self.unameGl, game, amount,)
             commands.execute(sql, input)
             result = commands.fetchall()
             return result
         else:
-            print("else")
-            sql = "SELECT uname, game, score FROM gameScores WHERE game = %s"
-            input = (game,)
+            sql = "SELECT uname, game, score FROM gameScores WHERE game = %s  ORDER BY score DESC LIMIT %s"
+            input = (game, amount,)
             commands.execute(sql, input)
             result = commands.fetchall()
             return result
@@ -257,6 +255,6 @@ if __name__=="__main__":
         print("Saved Score")
     elif theSave == 2:
         print("Error: not logged in yet")
-    lg = "jacks"
-    highScore = dbTest.topScores(lg, 1, 10)
-    print(highScore)
+    highScore = dbTest.topScores("all", 0, 6)
+    for i in highScore:
+        print(i, "\n")
