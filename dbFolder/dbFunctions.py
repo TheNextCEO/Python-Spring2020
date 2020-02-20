@@ -36,6 +36,7 @@ logoutUser()                        // Logs out the user and clears the unameGl 
 
 saveScore(game, score)              // Saves game and score with user already logged if.
                                     // ***Note: Requires user to be logged in first.
+                                    // Score should be an int
                                     // ### Returns ###
                                     // 0: The start function hasn't been used yet.
                                     // 1: Save completed
