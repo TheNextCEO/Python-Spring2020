@@ -91,7 +91,7 @@ class nullEscDBClass(object):
 
         '''Checking to see if the database exists'''
         for x in dBases:
-            if x == "theNullEscDB":
+            if x == "thenullescdb":
                 dbCheck = 1
                 break
 
@@ -101,20 +101,20 @@ class nullEscDBClass(object):
             host = self.dbHost,
             user = self.dbUser,
             passwd = self.dbPassword,
-            database = "theNullEscDB"
+            database = "thenullescdb"
             )
             self.dbStarted = 1
             commands = self.mydbCon.cursor()
         else:
             print("The database does NOT exist\nBuilding Database, and tables now")
 
-            commands.execute("CREATE DATABASE theNullEscDB")
+            commands.execute("CREATE DATABASE thenullescdb")
             '''This is to have it select the Database after creating it.'''
             self.mydbCon = mysql.connector.connect(
             host = self.dbHost,
             user = self.dbUser,
             passwd = self.dbPassword,
-            database = "theNullEscDB"
+            database = "thenullescdb"
             )
             commands = self.mydbCon.cursor()
             commands.execute("CREATE TABLE users (id INT AUTO_INCREMENT PRIMARY KEY, uname VARCHAR(255), pword VARCHAR(500))")
