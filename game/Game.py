@@ -21,8 +21,8 @@ def game():
     y = 481
 
     # default x and y velocities
-    vel_x = 2
-    vel_y = -3
+    vel_x = 10
+    vel_y = -6
 
     # constant y and acceleration
     v_y = -3
