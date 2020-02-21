@@ -230,7 +230,7 @@ class nullEscDBClass(object):
 
 
 if __name__=="__main__":
-
+'''
     dbTest = nullEscDBClass()
     dbTest.startDB("localhost", "nullEscUser", "notASecurePassword123")
 
@@ -259,4 +259,4 @@ if __name__=="__main__":
         print("Error: not logged in yet")
     highScore = dbTest.topScores("all", 0, 6)
     for i in highScore:
-        print(i, "\n")
+        print(i, "\n")'''
