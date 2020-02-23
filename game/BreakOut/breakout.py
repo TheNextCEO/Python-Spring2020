@@ -71,8 +71,8 @@ class ball:
         self.velocity = velocity
         self.x = halfWidth
         self.y = height - 50
-        self.dx = -2
-        self.dy = -3
+        self.dx = -(random.randint(1, 4))
+        self.dy = -(random.randint(1, 4))
         self._radius = 5
         self.boarder = 20
 
@@ -101,7 +101,7 @@ class ball:
 
 
 # screen size parameters
-(width, height) = (600, 500)
+(width, height) = (600, 400)
 halfWidth, halfHeight = width // 2, height // 2
 AREA = width * height
 
@@ -118,12 +118,12 @@ def breakout():
     CLOCK = py.time.Clock()
     DS = py.display.set_mode((width, height))
     py.display.set_caption("BreakOut")
-    FPS = 20
+    FPS = 200
 
     # wait player to hit enter
     pause()
 
-    P = player(15)
+    P = player(25)
     B = ball(6)
 
     run = True
@@ -132,12 +132,14 @@ def breakout():
     while run:
         events()
 
-        P.do()
-        B.do()
-
         for i in range(B.y, B.y + (B.dy * B.velocity)):
             if i > P.y and (P.x <= B.x <= P.x + P.width):
                 B.dy *= -1
+                B.velocity += 1
+                P.velocity += 1
+                break
+        P.do()
+        B.do()
 
         py.display.update()
         CLOCK.tick(FPS)
