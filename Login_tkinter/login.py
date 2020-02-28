@@ -1,18 +1,28 @@
 from tkinter import *
-def tkinter_mainwindow():
-    root = Tk()
-    root.title('Login_page')
 
-def login_page(tk):
-    window=Canvas(tk, height=1400, width=1400)
-    window.pack(fill="both", expand=True)
-    msg1 =Label(window, text='Login before you start')
-    msg1.pack(pady=10)
-    user_login=Button(window, text='Login', height="2",width="25")
-    user_resig=Button(window, text='Register',height="2",width="25")
-    user_login.pack(pady=10)
-    user_resig.pack(pady=10)
+root = Tk()
+frame = root.geometry("500x400")
+root.configure(bg = "white")
+Label(text="Welcome to NullEscape Arcade! Choose Login Or Register", bg="light slate blue", width="500",
+                      height="3", justify="left", font=("Helvetica", 18)).pack()
+Label(text="Enter Username", bg="white", width="500", height="2", font=("Helvetica", 16)).pack()
+usernameentry = Entry(root)
+usernameentry.pack()
+def hi():
+    global value
+    username = usernameentry.get()
+    password = passwordentry.get()
+    print("Username = " + str(username))
+    print("Password = " + str(password))
+Label(text="Enter Password", bg="white", width="500", height="2", font=("Helvetica", 16)).pack()
+passwordentry = Entry(root)
+passwordentry.pack()
 
-if __name__=='__main__':
-    login_page()
-mainloop()
+loginbutton = Button(text="Login",fg = "red", height="2", width="20",command=hi)
+loginbutton.pack()
+signupbutton = Button(text="Sign Up",fg = "red", height="2", width="20")
+signupbutton.pack()
+Button(root, text="Exit", command=root.quit).pack()
+
+
+root.mainloop()
