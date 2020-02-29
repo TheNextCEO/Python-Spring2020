@@ -1,6 +1,7 @@
 import mysql.connector
 '''I'm using w3schools as a guide for starting up the
 MySql. Link: https://www.w3schools.com/python/python_mysql_create_db.asp'''
+#mysql -u cop452101 -p'V0PoX+4a1PY=' -h dbsrv2.cs.fsu.edu
 
 '''
 Class Notes:
@@ -92,6 +93,7 @@ class nullEscDBClass(object):
         '''Checking to see if the database exists'''
         for x in dBases:
             if x == "thenullescdb":
+                print(x)
                 dbCheck = 1
                 break
 
@@ -230,9 +232,9 @@ class nullEscDBClass(object):
 
 
 if __name__=="__main__":
-'''
+    '''
     dbTest = nullEscDBClass()
-    dbTest.startDB("localhost", "nullEscUser", "notASecurePassword123")
+    dbTest.startDB("mysql.djangosfantasy.com", "djangoadmin8", "best!Group")
 
     iUser = input("Enter a username: ")
     iPassword = input("Enter a Password: ")
