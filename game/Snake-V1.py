@@ -29,7 +29,7 @@ class Snake:
 
     # Moves the snake
     def movement(self):
-
+        global snakeSpeed
         # Gets key press input
         move = py.key.get_pressed()
 
@@ -48,6 +48,9 @@ class Snake:
 
         # Creates a new apple if the snakes head is at the same position as the apple
         if self.applePos['x'] == self.snakeBody[0]['x'] and self.applePos['y'] == self.snakeBody[0]['y']:
+            # Makes the snake go faster for every apple eaten
+            if snakeSpeed >= 50:
+                snakeSpeed -= 2
             self.applePos = self.makeApple()
             self.score += 1
         # Removes the tail (to be added back with each movement) if no apple was ate
@@ -89,11 +92,34 @@ class Snake:
 
     # Draws the snake after each movement check
     def drawSnake(self):
+        x = self.snakeBody[0]['x'] * CUBESIZE
+        y = self.snakeBody[0]['y'] * CUBESIZE
+        py.draw.rect(WIN, GREEN, (x, y, CUBESIZE, CUBESIZE))
+
+        #TODO Scale math for the eyes (Instead of CUBESIZE - 7)
+        if self.direction == "left":
+            py.draw.rect(WIN, BLACK, (x + 3, y + 3, CUBESIZE / 4, CUBESIZE / 4))
+            py.draw.rect(WIN, BLACK, (x + 3, y + CUBESIZE - 7, CUBESIZE / 4, CUBESIZE / 4))
+        elif self.direction == "right":
+            py.draw.rect(WIN, BLACK, (x + CUBESIZE - 7, y + 3, CUBESIZE / 4, CUBESIZE / 4))
+            py.draw.rect(WIN, BLACK, (x + CUBESIZE - 7, y + CUBESIZE - 7, CUBESIZE / 4, CUBESIZE / 4))
+        elif self.direction == "up":
+            py.draw.rect(WIN, BLACK, (x + 3, y + 3, CUBESIZE / 4, CUBESIZE / 4))
+            py.draw.rect(WIN, BLACK, (x + CUBESIZE - 7, y + 3, CUBESIZE / 4, CUBESIZE / 4))
+        elif self.direction == "down":
+            py.draw.rect(WIN, BLACK, (x + 3, y + CUBESIZE - 7, CUBESIZE / 4, CUBESIZE / 4))
+            py.draw.rect(WIN, BLACK, (x + CUBESIZE - 7, y + CUBESIZE - 7, CUBESIZE / 4, CUBESIZE / 4))
+
         # Gets the coordinates for each cube in the snake and draws them.
-        for cube in self.snakeBody:
+        counter = 1
+        for cube in self.snakeBody[1:]:
             x = cube['x'] * CUBESIZE
             y = cube['y'] * CUBESIZE
-            py.draw.rect(WIN, BLACK, (x, y, CUBESIZE, CUBESIZE))
+            if counter % 2 == 0:
+                py.draw.rect(WIN, BLACK, (x, y, CUBESIZE, CUBESIZE))
+            else:
+                py.draw.rect(WIN, BLUE, (x, y, CUBESIZE, CUBESIZE))
+            counter += 1
 
     # Assigns a location for an apple
     def makeApple(self):
@@ -140,6 +166,8 @@ WIN = py.display.set_mode((width, height))
 
 # Colors
 BLACK = (0, 0, 0, 255)
+GREEN = (0, 255, 0, 0)
+BLUE = (0, 0, 255, 0)
 WHITE = (255, 255, 255, 255)
 RED = (255, 0, 0, 0)
 
@@ -149,6 +177,8 @@ CUBESIZE = 20
 CUBEWIDTH = int(width / CUBESIZE)
 CUBEHEIGHT = int(height / CUBESIZE)
 
+snakeSpeed = 100
+
 
 def Game():
     # Initializes game variables
@@ -157,7 +187,7 @@ def Game():
     SCOREFONT = py.font.Font('freesansbold.ttf', 18)
     CLOCK = py.time.Clock()
     py.display.set_caption("Snake")
-    FPS = 30
+    FPS = 60
 
     S = Snake()
 
@@ -165,7 +195,7 @@ def Game():
 
     while running:
         # Delay between each re-draw
-        py.time.delay(100)
+        py.time.delay(snakeSpeed)
         events()
 
         # Flag remains true until game over.
