@@ -28,7 +28,8 @@ class player:
         self._width = halfWidth // 3
         self._height = 10
         self.x = halfWidth - (self._width//2)
-        self.y = height - 50
+        self.y = height - 70
+
 
     def movement(self):
         # get the keys the the user presses
@@ -133,7 +134,7 @@ def breakout():
         events()
 
         for i in range(B.y, B.y + (B.dy * B.velocity)):
-            if i > P.y and (P.x <= B.x <= P.x + P.width):
+            if (i > P.y) and (P.x <= B.x <= P.x + P.width):
                 B.dy *= -1
                 B.velocity += 1
                 P.velocity += 1
