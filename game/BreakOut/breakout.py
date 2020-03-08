@@ -22,7 +22,7 @@ def events():
             sys.exit()
 
 
-class player:
+class player(py.sprite.Sprite):
     def __init__(self, velocity):
         self.velocity = velocity
         self._width = halfWidth // 3
@@ -67,7 +67,7 @@ class player:
         return self._width
 
 
-class ball:
+class ball(py.sprite.Sprite):
     def __init__(self, velocity):
         self.velocity = velocity
         self.x = halfWidth
@@ -119,7 +119,7 @@ def breakout():
     CLOCK = py.time.Clock()
     DS = py.display.set_mode((width, height))
     py.display.set_caption("BreakOut")
-    FPS = 200
+    FPS = 20
 
     # wait player to hit enter
     pause()
