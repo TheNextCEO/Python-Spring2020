@@ -204,8 +204,8 @@ def Game():
     global SCOREFONT
     global GAMEOVERFONT
 
-    SCOREFONT = py.font.Font('./Fonts/slkscr.ttf', 18)
-    GAMEOVERFONT = py.font.Font('./Fonts/slkscrb.ttf', 36)
+    SCOREFONT = py.font.Font('Snake/Fonts/slkscr.ttf', 18)
+    GAMEOVERFONT = py.font.Font('Snake/Fonts/slkscrb.ttf', 36)
     CLOCK = py.time.Clock()
     py.display.set_caption("Snake")
     FPS = 60
