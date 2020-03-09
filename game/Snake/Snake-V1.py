@@ -200,7 +200,8 @@ snakeSpeed = 100
 def Game():
     # Initializes game variables
     py.init()
-
+    global snakeSpeed
+    
     global SCOREFONT
     global GAMEOVERFONT
 
@@ -226,6 +227,7 @@ def Game():
         if not keepPlaying:
             drawGameOver()
             py.display.update()
+            snakeSpeed = 100
             waitForInput()
             del S
             S = Snake()
