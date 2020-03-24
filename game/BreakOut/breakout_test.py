@@ -57,6 +57,34 @@ class Block(py.sprite.Sprite):
         self.rect.y = y
 
 
+class Ball(py.sprite.Sprite):
+    """ This class is for the ball """
+    # speed of the pixels per cycle
+    speed = 10.0
+
+    # floating point representation of where the ball is
+    x = 0.0
+    y = 180.0
+
+    # direction of ball ( in degrees )
+    direction = 200
+    width = 10
+    height = 10
+
+    # contructor
+    def __init__(self):
+        # call the parent class (sprite) constructor
+        super().__init__()
+
+        # create the image of the ball
+        self.image = py.Surface([self.width, self.height])
+
+        # get a rectangle object that shows where our image is
+        self.rect = self.image.get_rect()
+
+        # getting the screen attributes for height/width
+
+
 def breakout():
     # initialize pygame
     py.init()
@@ -120,8 +148,6 @@ def breakout():
 
         # clear the screen
         screen.fill(black)
-
-
 
         # draw everything
         allsprites.draw(screen)
