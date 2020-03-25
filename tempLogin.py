@@ -4,7 +4,7 @@ db.startDB("mysql.djangosfantasy.com", "djangoadmin8", "best!Group")
 print("### Welcome to the Null Escape Arcade ###")
 
 def openGame(game):
-    
+    os.system("python3 "+game)
 
 def first_Menu():
     menu1 = "4"

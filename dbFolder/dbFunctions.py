@@ -1,6 +1,6 @@
 import random
 import string
-import os.path
+import os
 import mysql.connector
 '''I'm using w3schools as a guide for starting up the
 MySql. Link: https://www.w3schools.com/python/python_mysql_create_db.asp'''
@@ -30,12 +30,8 @@ signupUser(uname, pword)            // Used to add users to the user table
                                     // 1: username and password accepted.
                                     // 3: username already taken.
 
-loginUser(uname, pword, stay=0)     // Meant to be used to login the user, can
+loginUser(uname, pword)             // Meant to be used to login the user, can
                                     // check unameGl to see if a user is currently logged in.
-                                    // ### Stay parameter ####
-                                    // 0: do not stay logged in
-                                    // 1: Stay loggin in
-                                    //
                                     // ### Returns ###
                                     // 0: the start function hasn't been used yet.
                                     // 1: Username and password accepted
@@ -205,12 +201,14 @@ class nullEscDBClass(object):
     def startGameCon(self):
         if os.path.isfile("fileSave.txt") == True:
             fileSave = open("fileSave.txt", "r")
+            stayS = fileSave.readline().rstrip()
             tHost = fileSave.readline().rstrip()
             tDBuser = fileSave.readline().rstrip()
             tDBpass = fileSave.readline().rstrip()
             tUname = fileSave.readline().rstrip()
             tword = fileSave.readline().rstrip()
             fileSave.close()
+
 
             '''Used for connecting to mysl server'''
             mydb = mysql.connector.connect(
@@ -321,6 +319,7 @@ class nullEscDBClass(object):
 
     def logoutUser(self):
         self.unameGl = ""
+        self.unameGl = ""
         if os.path.exists("fileSave.txt"):
             os.remove("fileSave.txt")
 
@@ -387,7 +386,7 @@ if __name__=="__main__":
     iUser = input("Enter a username: ")
     iPassword = input("Enter a Password: ")
 
-    log = dbTest.loginUser(iUser, iPassword)
+    log = dbTest.signupUser(iUser, iPassword)
     if log == 1:
         print("Login Accepted.\nWelcome back", dbTest.unameGl)
     elif log == 2:

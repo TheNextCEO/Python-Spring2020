@@ -4,8 +4,7 @@ import sys, random
 import pygame as py
 from pygame.locals import *
 from dbFunctions import *
-db = nullEscDBClass()
-db.startGameCon()
+
 
 
 # Conditions to exit the game
@@ -241,6 +240,8 @@ def Game():
 
 
 if __name__ == '__main__':
+    db = nullEscDBClass()
+    db.startGameCon()
     Game()
     db.saveScore("snake", Snake.score)
     py.quit()
