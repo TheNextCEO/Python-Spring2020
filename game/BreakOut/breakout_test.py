@@ -79,10 +79,60 @@ class Ball(py.sprite.Sprite):
         # create the image of the ball
         self.image = py.Surface([self.width, self.height])
 
+        # color of the ball
+        self.image.fill(white)
+
         # get a rectangle object that shows where our image is
         self.rect = self.image.get_rect()
 
         # getting the screen attributes for height/width
+        self.screenheight = py.display.get_surface().get_height()
+        self.screenwidth = py.display.get_surface().get_width()
+
+    def bounce(self, diff):
+        """This function will bounce the ball in the opposite direction"""
+
+        self.direction = (180 - self.direction) % 360
+        self.direction -= diff
+
+    def update(self):
+        """Updating the position of the ball"""
+
+        # convert into degrees
+        direction_radians = math.radians(self.direction)
+
+        # change the position of x and y according to speed and direction
+        self.x += self.speed * math.sin(direction_radians)
+        self.y -= self.speed * math.cos(direction_radians)
+
+        # move the image
+        self.rect.x = self.x
+        self.rect.y = self.y
+        print(self.x, self.y)
+
+        # test if the ball bounced off the top
+        if self.y <= 0:
+            self.bounce(0)
+            self.y = 1
+
+        # test if the ball bounced off the left of the screen
+        if self.x <= 0:
+            self.direction = (360 - self.direction) % 360
+            self.x = 1
+
+        # test if the ball bounced off the right of the screen
+        if self.x > self.screenwidth - self.width:
+            self.direction = (360 - self.direction) % 360
+            self.x = self.screenwidth - self.width - 1
+
+        # test if the ball hit the bottom
+        if self.y > 600:
+            return True
+        else:
+            return False
+
+
+
 
 
 def breakout():
@@ -106,8 +156,13 @@ def breakout():
 
     # creating sprite lists
     blocks = py.sprite.Group()
-    # balls = py.sprite.Group()
+    balls = py.sprite.Group()
     allsprites = py.sprite.Group()
+
+    # create the ball
+    ball = Ball()
+    allsprites.add(ball)
+    balls.add(ball)
 
     # the top of the blocks (y position)
     top = 80
@@ -148,6 +203,10 @@ def breakout():
 
         # clear the screen
         screen.fill(black)
+
+        # update the ball
+        if not game_over:
+            game_over = ball.update()
 
         # draw everything
         allsprites.draw(screen)
