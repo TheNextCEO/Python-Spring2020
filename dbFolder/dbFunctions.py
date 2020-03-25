@@ -30,8 +30,12 @@ signupUser(uname, pword)            // Used to add users to the user table
                                     // 1: username and password accepted.
                                     // 3: username already taken.
 
-loginUser(uname, pword)             // Meant to be used to login the user, can
+loginUser(uname, pword, stay=0)     // Meant to be used to login the user, can
                                     // check unameGl to see if a user is currently logged in.
+                                    // ### Stay parameter ####
+                                    // 0: do not stay logged in
+                                    // 1: Stay loggin in
+                                    //
                                     // ### Returns ###
                                     // 0: the start function hasn't been used yet.
                                     // 1: Username and password accepted
@@ -90,7 +94,6 @@ class nullEscDBClass(object):
                     passwd = tDBpass,
                     database = "thenullescdb"
                 )
-                print("made it this far far?")
 
                 commands = mydb.cursor()
                 sql = "SELECT * FROM users WHERE uname = %s"
@@ -98,7 +101,6 @@ class nullEscDBClass(object):
                 commands.execute(sql, input)
                 result = commands.fetchone()
                 if result[3] == tword:
-                    print("how about this far far?")
 
                     self.dbHost = tHost
                     self.dbUser = tDBuser
@@ -147,7 +149,7 @@ class nullEscDBClass(object):
     '''user: nullEscUser password: notASecurePassword123 // This is a note of my temp u/p of my local mysql'''
     def startDB(self, theHost, theUser, thePassword):
         if self.dbStarted == 1:
-            print("skipped")
+            #print("skipped")
             return 1
 
         self.dbHost = theHost
@@ -319,6 +321,8 @@ class nullEscDBClass(object):
 
     def logoutUser(self):
         self.unameGl = ""
+        if os.path.exists("fileSave.txt"):
+            os.remove("fileSave.txt")
 
     def saveScore(self, game, score):
         if self.dbStarted == 0:
@@ -383,7 +387,7 @@ if __name__=="__main__":
     iUser = input("Enter a username: ")
     iPassword = input("Enter a Password: ")
 
-    log = dbTest.signupUser(iUser, iPassword)
+    log = dbTest.loginUser(iUser, iPassword)
     if log == 1:
         print("Login Accepted.\nWelcome back", dbTest.unameGl)
     elif log == 2:

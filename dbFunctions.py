@@ -90,7 +90,6 @@ class nullEscDBClass(object):
                     passwd = tDBpass,
                     database = "thenullescdb"
                 )
-                print("made it this far far?")
 
                 commands = mydb.cursor()
                 sql = "SELECT * FROM users WHERE uname = %s"
@@ -98,7 +97,6 @@ class nullEscDBClass(object):
                 commands.execute(sql, input)
                 result = commands.fetchone()
                 if result[3] == tword:
-                    print("how about this far far?")
 
                     self.dbHost = tHost
                     self.dbUser = tDBuser
@@ -147,7 +145,7 @@ class nullEscDBClass(object):
     '''user: nullEscUser password: notASecurePassword123 // This is a note of my temp u/p of my local mysql'''
     def startDB(self, theHost, theUser, thePassword):
         if self.dbStarted == 1:
-            print("skipped")
+            #print("skipped")
             return 1
 
         self.dbHost = theHost
@@ -319,6 +317,9 @@ class nullEscDBClass(object):
 
     def logoutUser(self):
         self.unameGl = ""
+        self.unameGl = ""
+        if os.path.exists("fileSave.txt"):
+            os.remove("fileSave.txt")
 
     def saveScore(self, game, score):
         if self.dbStarted == 0:
