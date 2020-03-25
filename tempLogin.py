@@ -3,7 +3,7 @@ db = nullEscDBClass()
 db.startDB("mysql.djangosfantasy.com", "djangoadmin8", "best!Group")
 print("### Welcome to the Null Escape Arcade ###")
 
-def openGame():
+def openGame(game):
     
 
 def first_Menu():
@@ -59,8 +59,8 @@ def main_menu():
             print("2. Ice Breaker")
             menu3 = input(">")
             if menu3 == "1":
-                openGame()
-            elif menu3 == "2":
+                openGame("Snake-V1.py")
+
 
         elif menu2 == "2":
             print("\n###highScores###")
