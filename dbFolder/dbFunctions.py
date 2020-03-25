@@ -120,6 +120,7 @@ class nullEscDBClass(object):
     '''user: nullEscUser password: notASecurePassword123 // This is a note of my temp u/p of my local mysql'''
     def startDB(self, theHost, theUser, thePassword):
         if self.dbStarted == 1:
+            print("skipped")
             return 1
 
         self.dbHost = theHost
@@ -214,15 +215,15 @@ class nullEscDBClass(object):
         elif result[2] == pword:
             fileSave = open("fileSave.txt", "w")
             self.unameGl = uname
-            # used code to build tempPass from: https://pythontips.com/2013/07/28/generating-a-random-string/
-            tempPass = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(15)])
+            # used some code (next line only) to build tempPass from: https://pythontips.com/2013/07/28/generating-a-random-string/
+            tempPass = ''.join([random.choice(string.ascii_lowercase + string.digits) for n in range(15)])
             sql = "UPDATE users SET tword = %s WHERE uname = %s"
             input = (tempPass, uname,)
             commands.execute(sql, input)
             self.mydbCon.commit()
             #This file will provide a temp password so that the real password isn't viewable from the file
             fileSave.write(str(stay)+"\n"+self.dbHost+"\n"+self.dbUser+"\n"+self.dbPassword+"\n"+uname+"\n"+tempPass)
-            #print(tempPass)
+            fileSave.close()
 
             return 1
         else:
