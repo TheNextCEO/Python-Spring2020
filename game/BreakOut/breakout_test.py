@@ -15,7 +15,7 @@ red = (225, 0, 0)
 
 # define the size of the blocks
 
-block_width = 23
+block_width = 46
 block_height = 15
 
 
@@ -132,7 +132,73 @@ class Ball(py.sprite.Sprite):
             return False
 
 
+# class UserMouse(py.sprite.Sprite):
+#     """Represents the bar that the player will be moving with the mouse"""
+#     def __init__(self):
+#         # Call the parent's construtor
+#         super().__init__()
+#
+#         self.width = 75
+#         self.height = 15
+#         self.image = py.Surface([self.width, self.height])
+#         self.image.fill(white)
+#
+#         # make the top-left corner the pass in location
+#         self.rect = self.image.get_rect()
+#         self.screenheight = py.display.get_surface().get_height()
+#         self.screenwidth = py.display.get_surface().get_width()
+#
+#         self.rect.x = 0
+#         self.rect.y = self.screenheight - self.height
+#
+#     def update(self):
+#         """Update the user pos"""
+#         # get the user pos
+#         pos = py.mouse.get_pos()
+#         # set the left side of the user bar to the mouse position
+#         self.rect.x = pos[0]
+#         # make sure we don't push user off
+#         if self.rect.x > self.screenwidth - self.width:
+#             self.rect.x = self.screenwidth - self.width
 
+class UserKey(py.sprite.Sprite):
+    """Represents the bar that the player will be moving with the keys"""
+    def __init__(self):
+        # Call the parent's construtor
+        super().__init__()
+
+        self.velocity = 15
+        self.width = 75
+        self.height = 15
+        self.image = py.Surface([self.width, self.height])
+        self.image.fill(white)
+
+        # make the top-left corner the pass in location
+        self.rect = self.image.get_rect()
+        self.screenheight = py.display.get_surface().get_height()
+        self.screenwidth = py.display.get_surface().get_width()
+
+        self.rect.x = 0
+        self.rect.y = self.screenheight - self.height
+
+    def update(self):
+        """Update the user pos"""
+        # get the keys the the user presses
+        move = py.key.get_pressed()
+
+        # user moving left
+        if move[K_LEFT]:
+            self.rect.x -= self.velocity
+        # user moving right
+        elif move[K_RIGHT]:
+            self.rect.x += self.velocity
+        # if the user goes to far right
+        if self.rect.x > self.screenwidth - self.width:
+            self.rect.x = self.screenwidth - self.width
+
+        # if the user goes to far left
+        if self.rect.x < 0:
+            self.rect.x = 0
 
 
 def breakout():
@@ -164,24 +230,28 @@ def breakout():
     allsprites.add(ball)
     balls.add(ball)
 
+    # create the user paddle
+    # user = UserMouse()
+    user = UserKey()
+    allsprites.add(user)
+
     # the top of the blocks (y position)
-    top = 80
+    top = 25
 
     # the numbers of blocks to make
-    blockcount = 32
+    blockcount = 16
 
     # --- Create blocks
-
     # five rows of blocks
     for row in range(5):
-        # 32 clomns of blocks
+        # 32 columns of blocks
         for column in range(0, blockcount):
             # create a block (color, x, y)
-            block = Block(blue, column * (block_width + 2) + 1, top)
+            block = Block(blue, column * (block_width + 2) + 10, top)
             blocks.add(block)
             allsprites.add(block)
         # move the top of the next row down
-        top += block_width + 2
+        top += block_height + 3
 
     # clock to limit speed
     clock = py.time.Clock()
@@ -206,7 +276,31 @@ def breakout():
 
         # update the ball
         if not game_over:
+            user.update()
             game_over = ball.update()
+
+        # see if the ball hits the paddle
+        if py.sprite.spritecollide(user, balls, False):
+            """the 'diff' lets you try to bounce the ball left or right
+                depending where on the paddle you hit it"""
+            diff = (user.rect.x + user.width/2) - (ball.rect.x + ball.width/2)
+
+            """ set the balls y pos in case we hit the ball on
+                the edge of the paddle"""
+            ball.rect.y = screen.get_height() - user.rect.height - ball.rect.height - 1
+            ball.bounce(diff)
+
+        # check if collisions  between ball and blocks
+        goneBlocks = py.sprite.spritecollide(ball, blocks, True)
+
+        # if we hit a block, bounce the ball
+        if len(goneBlocks) > 0:
+            ball.bounce(0)
+
+            # game ends if all the blocks are gone
+            if len(blocks) == 0:
+                game_over = True
+
 
         # draw everything
         allsprites.draw(screen)
