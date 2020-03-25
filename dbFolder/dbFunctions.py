@@ -18,6 +18,12 @@ startDB(Host, username, password)   // Used to check the connection and DATABASE
                                     // make sure to use the credidentials of your local machine.
                                     // 1: DB has succefully connected
 
+startGameCon()                      // Uses the login system from the main to test connect DB
+                                    // ****This goes at the top of Games built****
+                                    // 0: No fileSave.txt
+                                    // 1: Connection established.
+                                    // 2: incorrect key password, logged in elsewhere
+
 signupUser(uname, pword)            // Used to add users to the user table
                                     // ### Returns ###
                                     // 0: the start function hasn't been used yet.
@@ -105,6 +111,8 @@ class nullEscDBClass(object):
                         passwd = self.dbPassword,
                         database = "thenullescdb"
                     )
+
+                    self.key_rewrite()
                     self.dbStarted = 1
 
 
@@ -116,6 +124,25 @@ class nullEscDBClass(object):
         else:
             '''print('Structure is empty.')'''
             return 1
+
+    '''Writes a new key to the file and db for the user'''
+    '''This is to make my life easier, please do not use except in this file'''
+    def key_rewrite(self):
+        fileSave = open("fileSave.txt", "r")
+        stay = fileSave.readline().rstrip()
+        fileSave.close()
+
+        fileSave = open("fileSave.txt", "w")
+        commands = self.mydbCon.cursor()
+        tempPass = ''.join([random.choice(string.ascii_lowercase + string.digits) for n in range(15)])
+        sql = "UPDATE users SET tword = %s WHERE uname = %s"
+        input = (tempPass, self.unameGl,)
+        commands.execute(sql, input)
+        self.mydbCon.commit()
+        #This file will provide a temp password so that the real password isn't viewable from the file
+        fileSave.write(stay+"\n"+self.dbHost+"\n"+self.dbUser+"\n"+self.dbPassword+"\n"+self.unameGl+"\n"+tempPass)
+        fileSave.close()
+
 
     '''user: nullEscUser password: notASecurePassword123 // This is a note of my temp u/p of my local mysql'''
     def startDB(self, theHost, theUser, thePassword):
@@ -173,6 +200,57 @@ class nullEscDBClass(object):
             self.dbStarted = 1
             return 1
 
+    def startGameCon(self):
+        if os.path.isfile("fileSave.txt") == True:
+            fileSave = open("fileSave.txt", "r")
+            tHost = fileSave.readline().rstrip()
+            tDBuser = fileSave.readline().rstrip()
+            tDBpass = fileSave.readline().rstrip()
+            tUname = fileSave.readline().rstrip()
+            tword = fileSave.readline().rstrip()
+            fileSave.close()
+
+            '''Used for connecting to mysl server'''
+            mydb = mysql.connector.connect(
+                host = tHost,
+                user = tDBuser,
+                passwd = tDBpass,
+                database = "thenullescdb"
+            )
+            print("Game Check")
+
+            commands = mydb.cursor()
+            sql = "SELECT * FROM users WHERE uname = %s"
+            input = (tUname,)
+            commands.execute(sql, input)
+            result = commands.fetchone()
+            if result[3] == tword:
+                print("game check 2?")
+
+                self.dbHost = tHost
+                self.dbUser = tDBuser
+                self.dbPassword = tDBpass
+                self.unameGl = tUname
+
+                self.mydbCon = mysql.connector.connect(
+                    host = self.dbHost,
+                    user = self.dbUser,
+                    passwd = self.dbPassword,
+                    database = "thenullescdb"
+                )
+
+                self.key_rewrite()
+                self.dbStarted = 1
+                return 1
+            else:
+                # if the temp key is Wrong
+                return 2
+        else:
+            # If no file exits
+            return 0
+
+
+
     def signupUser(self, uname, pword):
         commands = ""
         '''Checking if db has started'''
@@ -188,11 +266,15 @@ class nullEscDBClass(object):
                 valid = 0
                 return 3
             if valid == 1:
-                sql = "INSERT INTO users (uname, pword) VALUES (%s, %s)"
-                input = (uname, pword,)
+                tempPass = ''.join([random.choice(string.ascii_lowercase + string.digits) for n in range(15)])
+                sql = "INSERT INTO users (uname, pword, tword) VALUES (%s, %s, %s)"
+                input = (uname, pword, tempPass,)
                 commands.execute(sql, input)
                 self.mydbCon.commit()
                 self.unameGl = uname
+                fileSave = open("fileSave.txt", "w")
+                fileSave.write("0\n"+self.dbHost+"\n"+self.dbUser+"\n"+self.dbPassword+"\n"+uname+"\n"+tempPass)
+                fileSave.close()
                 return 1
 
         else:
@@ -301,7 +383,7 @@ if __name__=="__main__":
     iUser = input("Enter a username: ")
     iPassword = input("Enter a Password: ")
 
-    log = dbTest.loginUser(iUser, iPassword, 1)
+    log = dbTest.signupUser(iUser, iPassword)
     if log == 1:
         print("Login Accepted.\nWelcome back", dbTest.unameGl)
     elif log == 2:
