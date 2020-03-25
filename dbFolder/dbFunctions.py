@@ -1,6 +1,7 @@
 import mysql.connector
 '''I'm using w3schools as a guide for starting up the
 MySql. Link: https://www.w3schools.com/python/python_mysql_create_db.asp'''
+#mysql -u cop452101 -p'V0PoX+4a1PY=' -h dbsrv2.cs.fsu.edu
 
 '''
 Class Notes:
@@ -36,6 +37,7 @@ logoutUser()                        // Logs out the user and clears the unameGl 
 
 saveScore(game, score)              // Saves game and score with user already logged if.
                                     // ***Note: Requires user to be logged in first.
+                                    // Score should be an int
                                     // ### Returns ###
                                     // 0: The start function hasn't been used yet.
                                     // 1: Save completed
@@ -90,7 +92,8 @@ class nullEscDBClass(object):
 
         '''Checking to see if the database exists'''
         for x in dBases:
-            if x == "theNullEscDB":
+            if x == "thenullescdb":
+                print(x)
                 dbCheck = 1
                 break
 
@@ -100,20 +103,20 @@ class nullEscDBClass(object):
             host = self.dbHost,
             user = self.dbUser,
             passwd = self.dbPassword,
-            database = "theNullEscDB"
+            database = "thenullescdb"
             )
             self.dbStarted = 1
             commands = self.mydbCon.cursor()
         else:
-            print("The database does NOT exist\nBuilding Database, and tables now")
+            '''print("The database does NOT exist\nBuilding Database, and tables now")'''
 
-            commands.execute("CREATE DATABASE theNullEscDB")
+            commands.execute("CREATE DATABASE thenullescdb")
             '''This is to have it select the Database after creating it.'''
             self.mydbCon = mysql.connector.connect(
             host = self.dbHost,
             user = self.dbUser,
             passwd = self.dbPassword,
-            database = "theNullEscDB"
+            database = "thenullescdb"
             )
             commands = self.mydbCon.cursor()
             commands.execute("CREATE TABLE users (id INT AUTO_INCREMENT PRIMARY KEY, uname VARCHAR(255), pword VARCHAR(500))")
@@ -191,39 +194,37 @@ class nullEscDBClass(object):
             return 0
         if user == 1 and self.isLoggedIn() == 0:
             return 2
-        commands = self.mydbCon.cursor()
+        '''I ran into a bug with the mysql not pulling right, turns out 'buffered=True' is need,
+        I found this solution here: https://stackoverflow.com/questions/29772337/python-mysql-connector-unread-result-found-when-using-fetchone'''
+        commands = self.mydbCon.cursor(buffered=True)
         sql = "SELECT * FROM gameScores WHERE game = %s"
         input = (game,)
         commands.execute(sql, input)
         result = commands.fetchone()
-        print(game)
         if self.is_empty(result) == 1 and game != "all":
             return 3
 
         if game == "all" and user == 0:
-            print("all-0")
-            sql = "SELECT uname, game, score FROM gameScores"
-            commands.execute(sql)
+            sql = "SELECT uname, game, score FROM gameScores ORDER BY score DESC LIMIT %s"
+            input = (amount,)
+            commands.execute(sql, input)
             result = commands.fetchall()
             return result
         elif game == "all" and user == 1:
-            print("all-1")
-            sql = "SELECT uname, game, score FROM gameScores WHERE uname = %s"
-            input = (self.unameGl,)
+            sql = "SELECT uname, game, score FROM gameScores WHERE uname = %s ORDER BY score DESC LIMIT %s"
+            input = (self.unameGl, amount,)
             commands.execute(sql, input)
             result = commands.fetchall()
             return result
         elif user == 1:
-            print("!all-1")
-            sql = "SELECT uname, game, score FROM gameScores WHERE uname = %s AND game = %s"
-            input = (self.unameGl, game,)
+            sql = "SELECT uname, game, score FROM gameScores WHERE uname = %s and game = %s ORDER BY score DESC LIMIT %s"
+            input = (self.unameGl, game, amount,)
             commands.execute(sql, input)
             result = commands.fetchall()
             return result
         else:
-            print("else")
-            sql = "SELECT uname, game, score FROM gameScores WHERE game = %s"
-            input = (game,)
+            sql = "SELECT uname, game, score FROM gameScores WHERE game = %s  ORDER BY score DESC LIMIT %s"
+            input = (game, amount,)
             commands.execute(sql, input)
             result = commands.fetchall()
             return result
@@ -231,13 +232,14 @@ class nullEscDBClass(object):
 
 
 if __name__=="__main__":
+    '''
     dbTest = nullEscDBClass()
-    dbTest.startDB("localhost", "nullEscUser", "notASecurePassword123")
+    dbTest.startDB("mysql.djangosfantasy.com", "djangoadmin8", "best!Group")
 
     iUser = input("Enter a username: ")
     iPassword = input("Enter a Password: ")
 
-    log = dbTest.loginUser(iUser, iPassword)
+    log = dbTest.signupUser(iUser, iPassword)
     if log == 1:
         print("Login Accepted.\nWelcome back", dbTest.unameGl)
     elif log == 2:
@@ -257,6 +259,6 @@ if __name__=="__main__":
         print("Saved Score")
     elif theSave == 2:
         print("Error: not logged in yet")
-    lg = "jacks"
-    highScore = dbTest.topScores(lg, 1, 10)
-    print(highScore)
+    highScore = dbTest.topScores("all", 0, 6)
+    for i in highScore:
+        print(i, "\n")'''
