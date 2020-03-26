@@ -209,7 +209,11 @@ def Game():
         CLOCK.tick(FPS)
         WIN.fill(WHITE)
 
+    db.saveScore("snake", int(S.score))
+
 
 if __name__ == '__main__':
+    db = nullEscDBClass()
+    db.startGameCon()
     Game()
     py.quit()
