@@ -217,7 +217,6 @@ class nullEscDBClass(object):
                 passwd = tDBpass,
                 database = "thenullescdb"
             )
-            print("Game Check")
 
             commands = mydb.cursor()
             sql = "SELECT * FROM users WHERE uname = %s"
@@ -225,7 +224,6 @@ class nullEscDBClass(object):
             commands.execute(sql, input)
             result = commands.fetchone()
             if result[3] == tword:
-                print("game check 2?")
 
                 self.dbHost = tHost
                 self.dbUser = tDBuser
@@ -334,6 +332,7 @@ class nullEscDBClass(object):
         input = (self.unameGl, game, score,)
         commands.execute(sql, input)
         self.mydbCon.commit()
+        self.key_rewrite()
         return 1
 
     def topScores(self, game = "all", user = 0, amount = 10):
