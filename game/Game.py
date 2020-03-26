@@ -61,12 +61,13 @@ class Bird(pygame.sprite.Sprite):
         self.dt = 0.1
         self.MAX_ANGLE, self.MIN_ANGLE = 45, -45
         self.start_time = self.ALIVE_TIME
-        self.jump_vel = 80
+        self.jump_vel = 65
         self.alive = True
         self.distance = 0
         self.mask = None
         self.image = None
         self.score = 0
+        self.pipeCollision = False
 
     def show(self):
         Clock.tick(50)
@@ -94,8 +95,9 @@ class Bird(pygame.sprite.Sprite):
 
     def move(self):
         if self.alive:
-            self.distance += 1
-            self.score += 3
+            if not self.pipeCollision:
+                self.distance += 1
+                self.score += 3
             self.x += self.vx*self.dt
             self.y += self.dt*(self.vy + 0.5*self.g*self.dt)
             self.vy = self.vy + self.g* self.dt
@@ -110,10 +112,6 @@ class Bird(pygame.sprite.Sprite):
         else:
             self.alive = False
             return True
-
-
-    def getMaskandImage(self):
-        return self.mask, self.image
 
     def stop(self):
         # self.y = height - height//20 - height//20
@@ -138,8 +136,6 @@ class Pipes(pygame.sprite.Sprite):
         self.v = width//40
         self.space = height//4
         self.y = height//7 + random.randint(0,height - self.space - height//20 - height//7 - height//9)
-        self.topMask = None
-        self.bottomMask = None
 
     def getx(self):
         return self.x
@@ -157,9 +153,6 @@ class Pipes(pygame.sprite.Sprite):
         screen.blit(self.pipe_2,(self.x, self.y + self.space))
 
         
-        self.topMask = pygame.mask.from_surface(self.pipe_1)
-        
-        self.bottomMask = pygame.mask.from_surface(self.pipe_2)
 
     def passed(self):
         if self.x >= -1*b_w*1.5:
@@ -174,65 +167,73 @@ class Pipes(pygame.sprite.Sprite):
 
 
 
+def main():
+    playing = True
+    b = Bird(x, y)
+    bg = Bg()
+    DIST = 8*width//10
+    pipes = [Pipes(5*width), Pipes(5*width + DIST)]
+    score = None
+    while playing:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                playing = False
 
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_SPACE] or b.pipeCollision:
+            b.click()
+        
+        font = pygame.font.SysFont("comicsans", 18)
+        score = font.render('Score ' + str(b.score), True, (150, 150, 150), (255, 255, 255)) 
 
-playing = True
-b = Bird(x, y)
-bg = Bg()
-DIST = 7*width//10
-pipes = [Pipes(5*width), Pipes(5*width + DIST)]
-
-while playing:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            playing = False
-
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_SPACE]:
-        b.click()
-    
-    font = pygame.font.SysFont("comicsans", 18)
-    score = font.render('Score ' + str(b.score), True, (150, 150, 150), (255, 255, 255)) 
-
-    
-
-    bg.show()
-    b.show()
-    for p in pipes:
-        p.show()
-    screen.blit(score, (width - score.get_width() - 15, 10))
-
-    b.move()
-    bg.move()
-    for p in pipes:
-        p.move()
-
-    if b.groundCollision():
-        bg.stop()
-        b.stop()
-        for p in pipes:
-            p.stop()
-        b.g = 0
-        b.vy = 0
-        b.y = 19*height//20 - b_h
         
 
-    for p in pipes:
-        if (0 <= b.y <= p.y or p.y + p.space <= b.y <= height) and p.x <= b.x <= p.x + 1.5*(b_w):
+        bg.show()
+        b.show()
+        for p in pipes:
+            p.show()
+        screen.blit(score, (width - score.get_width() - 15, 10))
+
+        b.move()
+        bg.move()
+        for p in pipes:
+            p.move()
+
+        if b.groundCollision():
             bg.stop()
             b.stop()
-            pipes[0].stop()
-            pipes[1].stop()
-            b.vx  = -5
+
+            for p in pipes:
+                p.stop()
+            b.g = 0
             b.vy = 0
-            break
+            b.y = 19*height//20 - b_h
+            score = b.score
+            
 
-    if pipes[0].passed():
-        if not pipes[1].passed():
-            pipes[0], pipes[1] = pipes[1], Pipes(pipes[1].getx() + DIST)
-        else:
-            pipes[0] = Pipes(b.getx() + width)
-            pipes[1] = Pipes(pipes[0].getx() + DIST)
+        for p in pipes:
+            if (0 <= b.y <= p.y or p.y + p.space <= b.y <= height) and p.x <= b.x <= p.x + 1.5*(b_w):
+                bg.stop()
+                b.stop()
+                pipes[0].stop()
+                pipes[1].stop()
+                b.pipeCollision = True
+                b.vx  = -5
+                b.vy = 0
+                break
 
-    pygame.display.update()
+        if pipes[0].passed():
+            if not pipes[1].passed():
+                pipes[0], pipes[1] = pipes[1], Pipes(pipes[1].getx() + DIST)
+            else:
+                pipes[0] = Pipes(b.getx() + width)
+                pipes[1] = Pipes(pipes[0].getx() + DIST)
+
+        pygame.display.update()
+    return score
+
+score = main()
+print(score)
+
+
