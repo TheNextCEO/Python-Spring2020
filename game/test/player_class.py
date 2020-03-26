@@ -93,7 +93,7 @@ WHITE = (255, 255, 255, 255)
 def game():
 
     P = player(3, 10)
-    P.setLocation(halfWidth, 0)
+    P.setLocation(halfWidth, 300)
 
     # wait player to hit enter
     pause()

@@ -1,3 +1,6 @@
+import random
+import string
+import os
 import mysql.connector
 '''I'm using w3schools as a guide for starting up the
 MySql. Link: https://www.w3schools.com/python/python_mysql_create_db.asp'''
@@ -13,6 +16,13 @@ logged in. Can use this variable to see if one is logged in.
 
 startDB(Host, username, password)   // Used to check the connection and DATABASE.
                                     // make sure to use the credidentials of your local machine.
+                                    // 1: DB has succefully connected
+
+startGameCon()                      // Uses the login system from the main to test connect DB
+                                    // ****This goes at the top of Games built****
+                                    // 0: No fileSave.txt
+                                    // 1: Connection established.
+                                    // 2: incorrect key password, logged in elsewhere
 
 signupUser(uname, pword)            // Used to add users to the user table
                                     // ### Returns ###
@@ -27,6 +37,7 @@ loginUser(uname, pword)             // Meant to be used to login the user, can
                                     // 1: Username and password accepted
                                     // 2: Username not registered
                                     // 3: Wrong Password.
+                                    // 4: User already logged in
 
 isLoggedIn()                        // This function Checks to see if there is a user logged if __name__ == '__main__':
                                     // ### Returns ###
@@ -62,6 +73,46 @@ class nullEscDBClass(object):
         self.dbHost = self.dbUser = self.dbPassword = self.mydbCon = self.unameGl = ""
         '''I will use this as a boolean in my other fuctions to make sure startDB() has been run'''
         self.dbStarted = 0
+        if os.path.isfile("fileSave.txt") == True:
+            fileSave = open("fileSave.txt", "r")
+            if fileSave.readline().rstrip() == "1":
+                tHost = fileSave.readline().rstrip()
+                tDBuser = fileSave.readline().rstrip()
+                tDBpass = fileSave.readline().rstrip()
+                tUname = fileSave.readline().rstrip()
+                tword = fileSave.readline().rstrip()
+                fileSave.close()
+
+                '''Used for connecting to mysl server'''
+                mydb = mysql.connector.connect(
+                    host = tHost,
+                    user = tDBuser,
+                    passwd = tDBpass,
+                    database = "thenullescdb"
+                )
+
+                commands = mydb.cursor()
+                sql = "SELECT * FROM users WHERE uname = %s"
+                input = (tUname,)
+                commands.execute(sql, input)
+                result = commands.fetchone()
+                if result[3] == tword:
+
+                    self.dbHost = tHost
+                    self.dbUser = tDBuser
+                    self.dbPassword = tDBpass
+                    self.unameGl = tUname
+
+                    self.mydbCon = mysql.connector.connect(
+                        host = self.dbHost,
+                        user = self.dbUser,
+                        passwd = self.dbPassword,
+                        database = "thenullescdb"
+                    )
+
+                    self.key_rewrite()
+                    self.dbStarted = 1
+
 
     '''Copied/Altered the is_empty function from: https://www.pythoncentral.io/how-to-check-if-a-list-tuple-or-dictionary-is-empty-in-python/'''
     def is_empty(self, any_structure):
@@ -72,8 +123,31 @@ class nullEscDBClass(object):
             '''print('Structure is empty.')'''
             return 1
 
+    '''Writes a new key to the file and db for the user'''
+    '''This is to make my life easier, please do not use except in this file'''
+    def key_rewrite(self):
+        fileSave = open("fileSave.txt", "r")
+        stay = fileSave.readline().rstrip()
+        fileSave.close()
+
+        fileSave = open("fileSave.txt", "w")
+        commands = self.mydbCon.cursor()
+        tempPass = ''.join([random.choice(string.ascii_lowercase + string.digits) for n in range(15)])
+        sql = "UPDATE users SET tword = %s WHERE uname = %s"
+        input = (tempPass, self.unameGl,)
+        commands.execute(sql, input)
+        self.mydbCon.commit()
+        #This file will provide a temp password so that the real password isn't viewable from the file
+        fileSave.write(stay+"\n"+self.dbHost+"\n"+self.dbUser+"\n"+self.dbPassword+"\n"+self.unameGl+"\n"+tempPass)
+        fileSave.close()
+
+
     '''user: nullEscUser password: notASecurePassword123 // This is a note of my temp u/p of my local mysql'''
     def startDB(self, theHost, theUser, thePassword):
+        if self.dbStarted == 1:
+            #print("skipped")
+            return 1
+
         self.dbHost = theHost
         self.dbUser = theUser
         self.dbPassword = thePassword
@@ -93,7 +167,6 @@ class nullEscDBClass(object):
         '''Checking to see if the database exists'''
         for x in dBases:
             if x == "thenullescdb":
-                print(x)
                 dbCheck = 1
                 break
 
@@ -107,6 +180,7 @@ class nullEscDBClass(object):
             )
             self.dbStarted = 1
             commands = self.mydbCon.cursor()
+            return 1
         else:
             '''print("The database does NOT exist\nBuilding Database, and tables now")'''
 
@@ -119,9 +193,61 @@ class nullEscDBClass(object):
             database = "thenullescdb"
             )
             commands = self.mydbCon.cursor()
-            commands.execute("CREATE TABLE users (id INT AUTO_INCREMENT PRIMARY KEY, uname VARCHAR(255), pword VARCHAR(500))")
+            commands.execute("CREATE TABLE users (id INT AUTO_INCREMENT PRIMARY KEY, uname VARCHAR(255), pword VARCHAR(500), tword VARCHAR(30))")
             commands.execute("CREATE TABLE gameScores (id INT AUTO_INCREMENT PRIMARY KEY, uname VARCHAR(255), game VARCHAR(255), score INT(20))")
             self.dbStarted = 1
+            return 1
+
+    def startGameCon(self):
+        if os.path.isfile("fileSave.txt") == True:
+            fileSave = open("fileSave.txt", "r")
+            stayS = fileSave.readline().rstrip()
+            tHost = fileSave.readline().rstrip()
+            tDBuser = fileSave.readline().rstrip()
+            tDBpass = fileSave.readline().rstrip()
+            tUname = fileSave.readline().rstrip()
+            tword = fileSave.readline().rstrip()
+            fileSave.close()
+
+
+            '''Used for connecting to mysl server'''
+            mydb = mysql.connector.connect(
+                host = tHost,
+                user = tDBuser,
+                passwd = tDBpass,
+                database = "thenullescdb"
+            )
+
+            commands = mydb.cursor()
+            sql = "SELECT * FROM users WHERE uname = %s"
+            input = (tUname,)
+            commands.execute(sql, input)
+            result = commands.fetchone()
+            if result[3] == tword:
+
+                self.dbHost = tHost
+                self.dbUser = tDBuser
+                self.dbPassword = tDBpass
+                self.unameGl = tUname
+
+                self.mydbCon = mysql.connector.connect(
+                    host = self.dbHost,
+                    user = self.dbUser,
+                    passwd = self.dbPassword,
+                    database = "thenullescdb"
+                )
+
+                self.key_rewrite()
+                self.dbStarted = 1
+                return 1
+            else:
+                # if the temp key is Wrong
+                return 2
+        else:
+            # If no file exits
+            return 0
+
+
 
     def signupUser(self, uname, pword):
         commands = ""
@@ -138,18 +264,22 @@ class nullEscDBClass(object):
                 valid = 0
                 return 3
             if valid == 1:
-                sql = "INSERT INTO users (uname, pword) VALUES (%s, %s)"
-                input = (uname, pword,)
+                tempPass = ''.join([random.choice(string.ascii_lowercase + string.digits) for n in range(15)])
+                sql = "INSERT INTO users (uname, pword, tword) VALUES (%s, %s, %s)"
+                input = (uname, pword, tempPass,)
                 commands.execute(sql, input)
                 self.mydbCon.commit()
                 self.unameGl = uname
+                fileSave = open("fileSave.txt", "w")
+                fileSave.write("0\n"+self.dbHost+"\n"+self.dbUser+"\n"+self.dbPassword+"\n"+uname+"\n"+tempPass)
+                fileSave.close()
                 return 1
 
         else:
             print("ERROR: use startDB(host, username, password) function before using the other class functions.")
             return 0
 
-    def loginUser(self, uname, pword):
+    def loginUser(self, uname, pword, stay=0):
         if self.dbStarted == 0:
             print("ERROR: use startDB(host, username, password) function before using the other class functions.")
             return 0
@@ -158,10 +288,23 @@ class nullEscDBClass(object):
         input = (uname,)
         commands.execute(sql, input)
         result = commands.fetchone()
+        if self.isLoggedIn() == 1:
+            return 4
         if self.is_empty(result) == 1:
             return 2
         elif result[2] == pword:
+            fileSave = open("fileSave.txt", "w")
             self.unameGl = uname
+            # used some code (next line only) to build tempPass from: https://pythontips.com/2013/07/28/generating-a-random-string/
+            tempPass = ''.join([random.choice(string.ascii_lowercase + string.digits) for n in range(15)])
+            sql = "UPDATE users SET tword = %s WHERE uname = %s"
+            input = (tempPass, uname,)
+            commands.execute(sql, input)
+            self.mydbCon.commit()
+            #This file will provide a temp password so that the real password isn't viewable from the file
+            fileSave.write(str(stay)+"\n"+self.dbHost+"\n"+self.dbUser+"\n"+self.dbPassword+"\n"+uname+"\n"+tempPass)
+            fileSave.close()
+
             return 1
         else:
             return 3
@@ -174,6 +317,9 @@ class nullEscDBClass(object):
 
     def logoutUser(self):
         self.unameGl = ""
+        self.unameGl = ""
+        if os.path.exists("fileSave.txt"):
+            os.remove("fileSave.txt")
 
     def saveScore(self, game, score):
         if self.dbStarted == 0:
@@ -186,6 +332,7 @@ class nullEscDBClass(object):
         input = (self.unameGl, game, score,)
         commands.execute(sql, input)
         self.mydbCon.commit()
+        self.key_rewrite()
         return 1
 
     def topScores(self, game = "all", user = 0, amount = 10):
@@ -232,7 +379,6 @@ class nullEscDBClass(object):
 
 
 if __name__=="__main__":
-    '''
     dbTest = nullEscDBClass()
     dbTest.startDB("mysql.djangosfantasy.com", "djangoadmin8", "best!Group")
 
@@ -246,6 +392,8 @@ if __name__=="__main__":
         print("Username not registered")
     elif log == 3:
         print("Wrong password")
+    elif log == 4:
+        print("Already logged in")
 
     if dbTest.isLoggedIn() == 1:
         print("Logged In")
@@ -261,4 +409,4 @@ if __name__=="__main__":
         print("Error: not logged in yet")
     highScore = dbTest.topScores("all", 0, 6)
     for i in highScore:
-        print(i, "\n")'''
+        print(i, "\n")
