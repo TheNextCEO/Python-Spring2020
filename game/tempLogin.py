@@ -57,11 +57,14 @@ def main_menu():
             print("List of games:")
             print("1. Snake")
             print("2. Ice Breaker")
+            print("3. Flappy Bird")
             menu3 = input(">")
             if menu3 == "1":
                 openGame("Snake-V1.py")
             elif menu3 == "2":
                 openGame("breakout_test.py")
+            elif menu3 == "3":
+                openGame("FlappyBird/Game.py")
 
 
         elif menu2 == "2":
