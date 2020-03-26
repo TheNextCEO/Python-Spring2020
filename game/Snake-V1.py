@@ -3,7 +3,7 @@
 import sys, random
 import pygame as py
 from pygame.locals import *
-
+from dbFunctions import *
 
 # Conditions to exit the game
 def events():
