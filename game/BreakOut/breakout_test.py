@@ -77,7 +77,7 @@ class Ball(py.sprite.Sprite):
         super().__init__()
 
         # create the image of the ball
-        self.image = py.Surface([self.width, self.height])
+        self.image = py.Surface((self.width, self.height), py.SRCALPHA)
 
         # color of the ball
         self.image.fill(white)
@@ -278,6 +278,13 @@ def breakout():
         if not game_over:
             user.update()
             game_over = ball.update()
+
+        # if game over
+        if game_over:
+            text = font.render("Game Over", True, red)
+            textpos = text.get_rect(centerx = background.get_width()/2)
+            textpos.top = 300
+            screen.blit(text, textpos)
 
         # see if the ball hits the paddle
         if py.sprite.spritecollide(user, balls, False):
