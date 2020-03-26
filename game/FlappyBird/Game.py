@@ -10,12 +10,12 @@ width, height = 300, 540
 screen = pygame.display.set_mode((width, height))
 
 pygame.display.set_caption("Flappy Bird")
-bg_image = pygame.transform.scale(pygame.image.load("./imgs/bg.png"),(width, height))
+bg_image = pygame.transform.scale(pygame.image.load(os.path.join("imgs","bg.png")),(width, height))
 
 b_w, b_h = width//10, height//20
-bird_imgs = [pygame.transform.scale(pygame.image.load("./imgs/bird" + str(i) + ".png"), (b_w,b_h)) for i in range(1, 4)]
+bird_imgs = [pygame.transform.scale(pygame.image.load(os.path.join("imgs", "bird" + str(i) + ".png")), (b_w,b_h)) for i in range(1, 4)]
 
-pipe_img = pygame.image.load("./imgs/pipe.png")
+pipe_img = pygame.image.load(os.path.join("imgs", "pipe.png"))
 
 Clock = pygame.time.Clock()
 
@@ -25,10 +25,10 @@ y = 40
 
 class Bg:
     def __init__(self):
-        self.b1 = pygame.transform.scale(pygame.image.load("./imgs/bg.png"),(width, height))
-        self.b2 = pygame.transform.scale(pygame.image.load("./imgs/bg.png"),(width, height))
-        self.base1 = pygame.transform.scale(pygame.image.load("./imgs/base.png"),(width, height//20))
-        self.base2 = pygame.transform.scale(pygame.image.load("./imgs/base.png"), (width, height // 20))
+        self.b1 = pygame.transform.scale(pygame.image.load(os.path.join("imgs","bg.png")),(width, height))
+        self.b2 = pygame.transform.scale(pygame.image.load(os.path.join("imgs","bg.png")),(width, height))
+        self.base1 = pygame.transform.scale(pygame.image.load(os.path.join("imgs","base.png")),(width, height//20))
+        self.base2 = pygame.transform.scale(pygame.image.load(os.path.join("imgs", "base.png")), (width, height // 20))
         self.v = width//40
         self.x = 0
 
@@ -93,11 +93,13 @@ class Bird(pygame.sprite.Sprite):
             self.vy = -1*self.jump_vel
             self.tilt_angle = self.MAX_ANGLE
 
-    def move(self):
+    def move(self): 
+        (self.x, self.y, self.vy, self.g)
         if self.alive:
             if not self.pipeCollision:
                 self.distance += 1
                 self.score += 3
+
             self.x += self.vx*self.dt
             self.y += self.dt*(self.vy + 0.5*self.g*self.dt)
             self.vy = self.vy + self.g* self.dt
@@ -145,7 +147,6 @@ class Pipes(pygame.sprite.Sprite):
         
 
     def show(self):
-        
         self.pipe_1 = pygame.transform.scale(self.pipe_1, (int(b_w*(1.5)), self.y))
         screen.blit(self.pipe_1, (self.x, 0))
         yPos = height - self.space - self.y - height//20
@@ -214,13 +215,17 @@ def main():
 
         for p in pipes:
             if (0 <= b.y <= p.y or p.y + p.space <= b.y <= height) and p.x <= b.x <= p.x + 1.5*(b_w):
+                #print("collided")
                 bg.stop()
-                b.stop()
                 pipes[0].stop()
                 pipes[1].stop()
                 b.pipeCollision = True
                 b.vx  = -5
-                b.vy = 0
+                b.vy = 100
+                # b.g = 30
+                # while b.y >= 480:
+                #     b.move()
+                # print("b.vy ", b.vy)
                 break
 
         if pipes[0].passed():
@@ -231,7 +236,9 @@ def main():
                 pipes[1] = Pipes(pipes[0].getx() + DIST)
 
         pygame.display.update()
+    
     return score
+
 
 score = main()
 print(score)
