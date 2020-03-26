@@ -59,7 +59,7 @@ def main_menu():
             print("2. Ice Breaker")
             menu3 = input(">")
             if menu3 == "1":
-                openGame("Snake-V1.py")
+                openGame("game/Snake-V1.py")
 
 
         elif menu2 == "2":
