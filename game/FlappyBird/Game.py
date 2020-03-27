@@ -9,9 +9,9 @@ width, height = 300, 540
 
 screen = pygame.display.set_mode((width, height))
 
-os.chdir("imgs")
+os.chdir("~/Game/FlappyBird/imgs")
 p = os.path.abspath(".")
-os.chdir("..")
+os.chdir("~/Game/FlappyBird/")
 
 pygame.display.set_caption("Flappy Bird")
 bg_image = pygame.transform.scale(pygame.image.load(os.path.join(p,"bg.png")),(width, height))
