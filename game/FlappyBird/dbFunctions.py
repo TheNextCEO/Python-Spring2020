@@ -2,6 +2,7 @@ import random
 import string
 import os
 import mysql.connector
+
 '''I'm using w3schools as a guide for starting up the
 MySql. Link: https://www.w3schools.com/python/python_mysql_create_db.asp'''
 #mysql -u cop452101 -p'V0PoX+4a1PY=' -h dbsrv2.cs.fsu.edu
@@ -68,6 +69,8 @@ topScores(game = "all", user = 0, amount = 10)
 
 
 '''
+
+
 class nullEscDBClass(object):
     def __init__(self):
         self.dbHost = self.dbUser = self.dbPassword = self.mydbCon = self.unameGl = ""
