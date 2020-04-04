@@ -9,17 +9,15 @@ width, height = 300, 540
 
 screen = pygame.display.set_mode((width, height))
 
-os.chdir("~/Game/FlappyBird/imgs")
-p = os.path.abspath(".")
-os.chdir("~/Game/FlappyBird/")
+
 
 pygame.display.set_caption("Flappy Bird")
-bg_image = pygame.transform.scale(pygame.image.load(os.path.join(p,"bg.png")),(width, height))
+bg_image = pygame.transform.scale(pygame.image.load("bg.png"),(width, height))
 
 b_w, b_h = width//10, height//20
-bird_imgs = [pygame.transform.scale(pygame.image.load(os.path.join(p, "bird" + str(i) + ".png")), (b_w,b_h)) for i in range(1, 4)]
+bird_imgs = [pygame.transform.scale(pygame.image.load("bird" + str(i) + ".png"), (b_w,b_h)) for i in range(1, 4)]
 
-pipe_img = pygame.image.load(os.path.join(p, "pipe.png"))
+pipe_img = pygame.image.load( "pipe.png")
 
 Clock = pygame.time.Clock()
 
@@ -29,10 +27,10 @@ y = 40
 
 class Bg:
     def __init__(self):
-        self.b1 = pygame.transform.scale(pygame.image.load(os.path.join("imgs","bg.png")),(width, height))
-        self.b2 = pygame.transform.scale(pygame.image.load(os.path.join("imgs","bg.png")),(width, height))
-        self.base1 = pygame.transform.scale(pygame.image.load(os.path.join("imgs","base.png")),(width, height//20))
-        self.base2 = pygame.transform.scale(pygame.image.load(os.path.join("imgs", "base.png")), (width, height // 20))
+        self.b1 = pygame.transform.scale(pygame.image.load("bg.png"),(width, height))
+        self.b2 = pygame.transform.scale(pygame.image.load(bg.png"),(width, height))
+        self.base1 = pygame.transform.scale(pygame.image.load(""base.png"),(width, height//20))
+        self.base2 = pygame.transform.scale(pygame.image.load( "base.png"), (width, height // 20))
         self.v = width//40
         self.x = 0
 
