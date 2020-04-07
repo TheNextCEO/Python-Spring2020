@@ -8,7 +8,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from LoginSignUpFolder.pypong import *
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -39,7 +39,6 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.pushButton_4)
         self.pushButton = QtWidgets.QPushButton(self.verticalLayoutWidget)
         self.pushButton.setObjectName("pushButton")
-        self.pushButton.clicked(pongGame.setuppong(self))
         self.verticalLayout.addWidget(self.pushButton)
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(320, 50, 241, 21))
@@ -55,6 +54,7 @@ class Ui_MainWindow(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
+
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -64,13 +64,13 @@ class Ui_MainWindow(object):
         self.pushButton_2.setText(_translate("MainWindow", "Flappy Bird"))
         self.pushButton_5.setText(_translate("MainWindow", "Pong"))
         self.pushButton_3.setText(_translate("MainWindow", "Snake"))
-        self.pushButton_4.setText(_translate("MainWindow", "Breakout"))
         self.pushButton_4.setText(_translate("MainWindow", "Nole Escape"))
         self.pushButton.setText(_translate("MainWindow", "PushButton"))
         self.label.setText(_translate("MainWindow", "NoleEscape Arcade"))
         self.label_2.setText(_translate("MainWindow", "Choose a game below!"))
 
-if "_name_" == "__main__":
+
+if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
@@ -78,4 +78,3 @@ if "_name_" == "__main__":
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
-
