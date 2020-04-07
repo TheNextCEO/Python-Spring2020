@@ -18,6 +18,10 @@ paddle_a.shapesize(stretch_wid=5,stretch_len=1)
 paddle_a.penup()
 paddle_a.goto(-350,0)
 
+
+#hey
+#testing
+#changing
 #paddle B
 paddle_b = turtle.Turtle()
 paddle_b.speed(0)
@@ -117,4 +121,3 @@ while True:
     if ball.xcor()<-340 and ball.xcor()>-350 and (ball.ycor()<paddle_a.ycor()+40 and ball.ycor()>paddle_a.ycor()-40):
         ball.setx(-340)
         ball.dx *= -1
-

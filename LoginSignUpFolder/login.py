@@ -1,8 +1,11 @@
 import sqlite3
-from welcome import Ui_MainWindow
-from signup import Ui_signUp
+from LoginSignUpFolder.signup import Ui_signUp
+from LoginSignUpFolder.welcome import Ui_MainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
+from dbFolder.dbFunctions import nullEscDBClass
 
+database = nullEscDBClass()
+database.startDB("mysql.djangosfantasy.com", "djangoadmin8", "best!Group")
 
 class Ui_Dialog(object):
     def showMessageBox(self,title,message):
@@ -31,16 +34,23 @@ class Ui_Dialog(object):
 
         #check if these are valid or not
         #need a connection tot he database first
-        connection = sqlite3.connect("login.db")
+        result = database.loginUser(username,password)
+        print("result = " + str(result))
         #find these in database
-        result=connection.execute("SELECT * FROM USERS WHERE USERNAME=? AND PASSWORD=?",(username,password))
-        if(len(result.fetchall())>0):
+        if(result == 1):
             print("User found! ")
+            message = "Welcome back " + username + "!"
+            self.showMessageBox('Welcome!', message)
             self.welcomeWindowshow()
-        else:
+        if (result == 0):
             print("User not found!")
-        self.showMessageBox('Warning!','Invalid Username and Password')
-        connection.close()
+            self.showMessageBox('Warning!','The start function hasnt been used yet.')
+        if (result == 2):
+            print("User not found!")
+            self.showMessageBox('Warning!', 'Username not registered. Please signup.')
+        if (result == 3):
+            print("User not found!")
+            self.showMessageBox('Warning!', 'Invalid password.')
 
     def signupCheck(self):
         print("Signup Button Clicked!")
@@ -119,15 +129,15 @@ class Ui_Dialog(object):
 
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
 
-        self.u_name_label.setText(_translate("Dialog", "USERNAME:"))
+        self.u_name_label.setText(_translate("Dialog", "Username:"))
 
-        self.pass_label.setText(_translate("Dialog", "PASSWORD:"))
+        self.pass_label.setText(_translate("Dialog", "Password:"))
 
         self.login_btn.setText(_translate("Dialog", "Login"))
 
         self.signup_btn.setText(_translate("Dialog", "Sign Up"))
 
-        self.label.setText(_translate("Dialog", "NoleEscape Login"))
+        self.label.setText(_translate("Dialog", "Welcome to NoleEscape"))
 
 
 if __name__ == "__main__":

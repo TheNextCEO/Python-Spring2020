@@ -1,14 +1,5 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'welcome.ui'
-#
-# Created by: PyQt5 UI code generator 5.14.1
-#
-# WARNING! All changes made in this file will be lost!
-
-
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from LoginSignUpFolder.pypong import start
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -36,7 +27,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.label_2.setText(_translate("MainWindow", "Welcome to NoleEscape"))
+        self.label_2.setText(_translate("MainWindow", "Welcome to NoleEscape Arcade"))
         self.label_3.setText(_translate("MainWindow", "Games"))
 
 

@@ -2,13 +2,23 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from dbFolder.dbFunctions import nullEscDBClass
 
 class Ui_signUp(object):
+    def showMessageBox(self,title,message):
+        msgBox=QtWidgets.QMessageBox()
+        msgBox.setIcon(QtWidgets.QMessageBox.Warning)
+        msgBox.setWindowTitle(title)
+        msgBox.setText(message)
+        msgBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
+        msgBox.exec_()
+
     def insertData(self):
         username=self.uname_lineEdit.text()
         email=self.email_lineEdit.text()
         password=self.password_lineEdit.text()
         database = nullEscDBClass()
+
         database.startDB("mysql.djangosfantasy.com", "djangoadmin8", "best!Group")
         database.signupUser(username,password)
+        self.showMessageBox('SignUp!', 'SignUp Successful!')
 
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
@@ -58,7 +68,7 @@ class Ui_signUp(object):
         self.pass_label.setText(_translate("Dialog", "Password:"))
         self.u_name_label_2.setText(_translate("Dialog", "E-mail Address:"))
         self.signup_btn.setText(_translate("Dialog", "Sign Up"))
-        self.label_2.setText(_translate("Dialog","Welcome to NoleEscape! Create a New Account"))
+        self.label_2.setText(_translate("Dialog","Welcome to NoleEscape: Create a New Account"))
 
 
 if __name__ == "__main__":
