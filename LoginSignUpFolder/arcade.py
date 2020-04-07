@@ -8,13 +8,20 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+<<<<<<< HEAD
 from LoginSignUpFolder.pypong import *
+=======
+from pypong import *
+>>>>>>> 349564f8ecf5497d4a48dea86d872b39cf440c70
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
+<<<<<<< HEAD
 
+=======
+>>>>>>> 349564f8ecf5497d4a48dea86d872b39cf440c70
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.listView = QtWidgets.QListView(self.centralwidget)
@@ -40,6 +47,10 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.pushButton_4)
         self.pushButton = QtWidgets.QPushButton(self.verticalLayoutWidget)
         self.pushButton.setObjectName("pushButton")
+<<<<<<< HEAD
+=======
+        self.pushButton.clicked(pongGame.setuppong(self))
+>>>>>>> 349564f8ecf5497d4a48dea86d872b39cf440c70
         self.verticalLayout.addWidget(self.pushButton)
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(320, 50, 241, 21))
@@ -55,6 +66,10 @@ class Ui_MainWindow(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 349564f8ecf5497d4a48dea86d872b39cf440c70
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -64,17 +79,31 @@ class Ui_MainWindow(object):
         self.pushButton_2.setText(_translate("MainWindow", "Flappy Bird"))
         self.pushButton_5.setText(_translate("MainWindow", "Pong"))
         self.pushButton_3.setText(_translate("MainWindow", "Snake"))
+<<<<<<< HEAD
         self.pushButton_4.setText(_translate("MainWindow", "Breakout"))
+=======
+        self.pushButton_4.setText(_translate("MainWindow", "Nole Escape"))
+>>>>>>> 349564f8ecf5497d4a48dea86d872b39cf440c70
         self.pushButton.setText(_translate("MainWindow", "PushButton"))
         self.label.setText(_translate("MainWindow", "NoleEscape Arcade"))
         self.label_2.setText(_translate("MainWindow", "Choose a game below!"))
 
 
+<<<<<<< HEAD
 if __name__ == "__main__":
     import sys
+=======
+if "_name_" == "__main__":
+    import sys
+    hi = pongGame()
+>>>>>>> 349564f8ecf5497d4a48dea86d872b39cf440c70
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
+<<<<<<< HEAD
+=======
+
+>>>>>>> 349564f8ecf5497d4a48dea86d872b39cf440c70
