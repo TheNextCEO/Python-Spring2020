@@ -1,6 +1,6 @@
 import sqlite3
 from LoginSignUpFolder.signup import Ui_signUp
-from LoginSignUpFolder.welcome import Ui_MainWindow
+from LoginSignUpFolder.arcade import Ui_MainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
 from dbFolder.dbFunctions import nullEscDBClass
 
@@ -15,11 +15,11 @@ class Ui_Dialog(object):
         msgBox.setText(message)
         msgBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
         msgBox.exec_()
-    def welcomeWindowshow(self):
-        self.welcomeWindow = QtWidgets.QMainWindow()
+    def arcadeWindowShow(self):
+        self.arcadeWindow = QtWidgets.QMainWindow()
         self.ui = Ui_MainWindow()
-        self.ui.setupUi(self.welcomeWindow)
-        self.welcomeWindow.show()
+        self.ui.setupUi(self.arcadeWindow)
+        self.arcadeWindow.show()
     def signUpShow(self):
         self.signUpWindow=QtWidgets.QDialog()
         self.ui=Ui_signUp()
@@ -41,7 +41,7 @@ class Ui_Dialog(object):
             print("User found! ")
             message = "Welcome back " + username + "!"
             self.showMessageBox('Welcome!', message)
-            self.welcomeWindowshow()
+            self.arcadeWindowShow()
         if (result == 0):
             print("User not found!")
             self.showMessageBox('Warning!','The start function hasnt been used yet.')
