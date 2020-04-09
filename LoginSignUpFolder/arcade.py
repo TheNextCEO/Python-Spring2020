@@ -8,7 +8,10 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+#import LoginSignUpFolder.Game.py as flappy
+import LoginSignUpFolder.Gametry
+import os
+import pygame
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -28,6 +31,7 @@ class Ui_MainWindow(object):
         self.pushButton_2 = QtWidgets.QPushButton(self.verticalLayoutWidget)
         self.pushButton_2.setObjectName("pushButton_2")
         self.verticalLayout.addWidget(self.pushButton_2)
+        self.pushButton_2.clicked.connect(self.flappy)
         self.pushButton_5 = QtWidgets.QPushButton(self.verticalLayoutWidget)
         self.pushButton_5.setObjectName("pushButton_5")
         self.verticalLayout.addWidget(self.pushButton_5)
@@ -37,6 +41,7 @@ class Ui_MainWindow(object):
         self.pushButton_4 = QtWidgets.QPushButton(self.verticalLayoutWidget)
         self.pushButton_4.setObjectName("pushButton_4")
         self.verticalLayout.addWidget(self.pushButton_4)
+        self.pushButton_4.clicked.connect(self.break_out)
         self.pushButton = QtWidgets.QPushButton(self.verticalLayoutWidget)
         self.pushButton.setObjectName("pushButton")
         self.verticalLayout.addWidget(self.pushButton)
@@ -68,6 +73,10 @@ class Ui_MainWindow(object):
         self.pushButton.setText(_translate("MainWindow", "PushButton"))
         self.label.setText(_translate("MainWindow", "NoleEscape Arcade"))
         self.label_2.setText(_translate("MainWindow", "Choose a game below!"))
+    def flappy(self):
+        os.system("python Gametry.py")
+    def break_out(self):
+        os.system("python breakout_test.py")
 
 
 if __name__ == "__main__":
