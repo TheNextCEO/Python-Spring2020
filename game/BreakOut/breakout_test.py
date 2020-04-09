@@ -202,12 +202,15 @@ class UserKey(py.sprite.Sprite):
             self.rect.x = 0
 
 
+bg = py.image.load("unnamed.jpg")
+
+
 def breakout():
     # initialize pygame
     py.init()
 
     # create an 800X600 screen
-    screen = py.display.set_mode([800,600])
+    screen = py.display.set_mode([800, 600])
 
     # set then title of the window
     py.display.set_caption("Breakout")
@@ -219,7 +222,8 @@ def breakout():
     font = py.font.Font(None, 36)
 
     # making the surface to draw on
-    background = py.Surface(screen.get_size())
+    # background = py.Surface(screen.get_size())
+    background = py.image.load("SpaceBackground1.png").convert()
 
     # creating sprite lists
     blocks = py.sprite.Group()
@@ -273,7 +277,8 @@ def breakout():
         clock.tick(30)
 
         # clear the screen
-        screen.fill(black)
+        screen.fill((0,0,0))
+        screen.blit(background, (0, 0))
 
         # update the ball
         if not game_over:
