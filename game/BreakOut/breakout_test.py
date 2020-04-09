@@ -3,7 +3,8 @@
 import math, random, sys
 import pygame as py
 from pygame.locals import *
-
+import sys
+from PyQt5 import QtWidgets
 
 # define the colors
 
