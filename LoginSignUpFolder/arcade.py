@@ -35,6 +35,7 @@ class Ui_MainWindow(object):
         self.pushButton_5 = QtWidgets.QPushButton(self.verticalLayoutWidget)
         self.pushButton_5.setObjectName("pushButton_5")
         self.verticalLayout.addWidget(self.pushButton_5)
+        self.pushButton_5.clicked.connect(self.pong)
         self.pushButton_3 = QtWidgets.QPushButton(self.verticalLayoutWidget)
         self.pushButton_3.setObjectName("pushButton_3")
         self.verticalLayout.addWidget(self.pushButton_3)
@@ -77,6 +78,8 @@ class Ui_MainWindow(object):
         os.system("python Gametry.py")
     def break_out(self):
         os.system("python breakout_test.py")
+    def pong(self):
+        os.system("python pypong.py")
 
 
 if __name__ == "__main__":
