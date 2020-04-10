@@ -39,6 +39,7 @@ class Ui_MainWindow(object):
         self.pushButton_3 = QtWidgets.QPushButton(self.verticalLayoutWidget)
         self.pushButton_3.setObjectName("pushButton_3")
         self.verticalLayout.addWidget(self.pushButton_3)
+        self.pushButton_3.clicked.connect(self.snake)
         self.pushButton_4 = QtWidgets.QPushButton(self.verticalLayoutWidget)
         self.pushButton_4.setObjectName("pushButton_4")
         self.verticalLayout.addWidget(self.pushButton_4)
@@ -71,7 +72,7 @@ class Ui_MainWindow(object):
         self.pushButton_5.setText(_translate("MainWindow", "Pong"))
         self.pushButton_3.setText(_translate("MainWindow", "Snake"))
         self.pushButton_4.setText(_translate("MainWindow", "Nole Escape"))
-        self.pushButton.setText(_translate("MainWindow", "PushButton"))
+        self.pushButton.setText(_translate("MainWindow", "AI versions"))
         self.label.setText(_translate("MainWindow", "NoleEscape Arcade"))
         self.label_2.setText(_translate("MainWindow", "Choose a game below!"))
     def flappy(self):
@@ -80,6 +81,8 @@ class Ui_MainWindow(object):
         os.system("python breakout_test.py")
     def pong(self):
         os.system("python pypong.py")
+    def snake(self):
+        os.system("python Dsnake.py")
 
 
 if __name__ == "__main__":

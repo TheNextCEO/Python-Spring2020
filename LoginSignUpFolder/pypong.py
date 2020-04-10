@@ -1,5 +1,6 @@
 if __name__=="__main__":
     import turtle
+
     wn=turtle.Screen()
     wn.title("Pong game")
     wn.bgpic("source.gif")
