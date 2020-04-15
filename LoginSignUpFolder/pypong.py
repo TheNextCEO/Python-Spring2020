@@ -58,22 +58,26 @@ if __name__=="__main__":
 
     def paddle_a_up():
         y=paddle_a.ycor()
-        y +=20
+        if y<250:
+            y +=20
         paddle_a.sety(y)
 
     def paddle_a_down():
         y=paddle_a.ycor()
-        y -=20
+        if y>-250:
+            y -=20
         paddle_a.sety(y)
 
     def paddle_b_up():
         y=paddle_b.ycor()
-        y +=20
+        if y < 250:
+            y +=20
         paddle_b.sety(y)
 
     def paddle_b_down():
         y=paddle_b.ycor()
-        y -=20
+        if y>-250:
+            y -=20
         paddle_b.sety(y)
 
     #keyboard binding
