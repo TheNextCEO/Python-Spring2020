@@ -8,6 +8,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from LoginSignUpFolder.AIarcade import Ui_MainWindowAI
 #import LoginSignUpFolder.Game.py as flappy
 import LoginSignUpFolder.Gametry
 import os
@@ -44,9 +45,12 @@ class Ui_MainWindow(object):
         self.pushButton_4.setObjectName("pushButton_4")
         self.verticalLayout.addWidget(self.pushButton_4)
         self.pushButton_4.clicked.connect(self.break_out)
+
         self.pushButton = QtWidgets.QPushButton(self.verticalLayoutWidget)
         self.pushButton.setObjectName("pushButton")
         self.verticalLayout.addWidget(self.pushButton)
+        self.pushButton.clicked.connect(self.AIarcadeWindowShow)
+
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(320, 50, 241, 21))
         self.label.setObjectName("label")
@@ -64,6 +68,11 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+    def AIarcadeWindowShow(self):
+        self.arcadeWindow = QtWidgets.QMainWindow()
+        self.ui = Ui_MainWindowAI()
+        self.ui.setupUi(self.arcadeWindow)
+        self.arcadeWindow.show()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -83,6 +92,8 @@ class Ui_MainWindow(object):
         os.system("python pypong.py")
     def snake(self):
         os.system("python Dsnake.py")
+    def AI(self):
+        self.AIarcadeWindowShow()
 
 
 if __name__ == "__main__":
