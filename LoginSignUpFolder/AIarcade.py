@@ -28,6 +28,7 @@ class Ui_MainWindowAI(object):
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton.setGeometry(QtCore.QRect(231, 180, 321, 34))
         self.pushButton.setObjectName("pushButton")
+        self.pushButton.clicked.connect(self.AIflappy)
         self.pushButton2 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton2.setGeometry(QtCore.QRect(230, 250, 321, 34))
         self.pushButton2.setObjectName("pushButton2")
@@ -45,6 +46,9 @@ class Ui_MainWindowAI(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+    def AIflappy(self):
+        os.system("python AIflappybird.py")
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
@@ -60,7 +64,7 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
+    ui = Ui_MainWindowAI()
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
