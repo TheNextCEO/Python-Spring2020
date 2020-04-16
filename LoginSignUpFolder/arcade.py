@@ -14,6 +14,7 @@ import LoginSignUpFolder.Gametry
 import os
 import pygame
 
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
