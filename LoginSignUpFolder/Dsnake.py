@@ -3,6 +3,9 @@
 import sys, random
 import pygame as py
 from pygame.locals import *
+from dbFolder.dbFunctions import nullEscDBClass as x
+
+print(x.database.isLoggedIn())
 
 
 if __name__ == '__main__':
@@ -230,6 +233,7 @@ if __name__ == '__main__':
             if not keepPlaying:
                 drawGameOver()
                 py.display.update()
+                database.saveScore("snake", int(S.score))
                 snakeSpeed = 100
                 waitForInput()
                 del S
@@ -238,5 +242,7 @@ if __name__ == '__main__':
             py.display.update()
             CLOCK.tick(FPS)
             WIN.fill(WHITE)
+        #print(int(S.score))
+        #database.saveScore("snake", int(S.score))
     Game()
     py.quit()
