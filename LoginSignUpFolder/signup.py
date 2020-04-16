@@ -22,7 +22,7 @@ class Ui_signUp(object):
 
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(578, 383)
+        Dialog.resize(581, 461)
         self.label = QtWidgets.QLabel(Dialog)
         self.label.setGeometry(QtCore.QRect(110, 80, 68, 19))
         self.label.setText("")
