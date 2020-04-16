@@ -47,7 +47,7 @@ class Ui_MainWindowAI(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def AIflappy(self):
-        os.system("python AIflappybird.py")
+        os.system("python3 AIflappybird.py")
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
