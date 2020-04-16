@@ -9,6 +9,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from LoginSignUpFolder.AIarcade import Ui_MainWindowAI
+from LoginSignUpFolder.highscores import Ui_MainWindowHighScore
 #import LoginSignUpFolder.Game.py as flappy
 import LoginSignUpFolder.Gametry
 import os
@@ -52,6 +53,11 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.pushButton)
         self.pushButton.clicked.connect(self.AIarcadeWindowShow)
 
+        self.pushButton_6 = QtWidgets.QPushButton(self.verticalLayoutWidget)
+        self.pushButton_6.setObjectName("pushButton_6")
+        self.verticalLayout.addWidget(self.pushButton_6)
+        self.pushButton_6.clicked.connect(self.HighScoreWindowShow)
+
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(320, 50, 241, 21))
         self.label.setObjectName("label")
@@ -75,6 +81,12 @@ class Ui_MainWindow(object):
         self.ui.setupUi(self.arcadeWindow)
         self.arcadeWindow.show()
 
+    def HighScoreWindowShow(self):
+        self.highscoreWindow = QtWidgets.QMainWindow()
+        self.ui = Ui_MainWindowHighScore()
+        self.ui.setupUi(self.highscoreWindow)
+        self.highscoreWindow.show()
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
@@ -83,18 +95,22 @@ class Ui_MainWindow(object):
         self.pushButton_3.setText(_translate("MainWindow", "Snake"))
         self.pushButton_4.setText(_translate("MainWindow", "Nole Escape"))
         self.pushButton.setText(_translate("MainWindow", "AI versions"))
+        self.pushButton_6.setText(_translate("MainWindow", "High Scores"))
+
         self.label.setText(_translate("MainWindow", "NoleEscape Arcade"))
         self.label_2.setText(_translate("MainWindow", "Choose a game below!"))
     def flappy(self):
-        os.system("python Gametry.py")
+        os.system("python3 Gametry.py")
     def break_out(self):
-        os.system("python breakout_test.py")
+        os.system("python3 breakout_test.py")
     def pong(self):
-        os.system("python pypong.py")
+        os.system("python3 pypong.py")
     def snake(self):
-        os.system("python Dsnake.py")
+        os.system("python3 Dsnake.py")
     def AI(self):
         self.AIarcadeWindowShow()
+    def HighScore(self):
+        self.HighScoreWindowShow()
 
 
 if __name__ == "__main__":

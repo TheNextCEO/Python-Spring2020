@@ -10,7 +10,9 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import os
 
-class Ui_MainWindowAI(object):
+
+
+class Ui_MainWindowHighScore(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
@@ -28,7 +30,6 @@ class Ui_MainWindowAI(object):
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton.setGeometry(QtCore.QRect(231, 180, 321, 34))
         self.pushButton.setObjectName("pushButton")
-        self.pushButton.clicked.connect(self.AIflappy)
         self.pushButton2 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton2.setGeometry(QtCore.QRect(230, 250, 321, 34))
         self.pushButton2.setObjectName("pushButton2")
@@ -52,7 +53,7 @@ class Ui_MainWindowAI(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.label.setText(_translate("MainWindow", "NoleEscape Arcade The AI version"))
+        self.label.setText(_translate("MainWindow", "NoleEscape Arcade Highscores"))
         self.label_2.setText(_translate("MainWindow", "Click below to choose a Game"))
         self.pushButton.setText(_translate("MainWindow", "Flappy Bird"))
         self.pushButton2.setText(_translate("MainWindow", "Pong"))
@@ -64,7 +65,7 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindowAI()
+    ui = Ui_MainWindowHighScore()
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
