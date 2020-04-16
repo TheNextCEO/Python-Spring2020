@@ -1,6 +1,9 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from dbFolder.dbFunctions import nullEscDBClass
 
+global flag
+flag = False
+
 class Ui_signUp(object):
     def showMessageBox(self,title,message):
         msgBox=QtWidgets.QMessageBox()
@@ -9,6 +12,9 @@ class Ui_signUp(object):
         msgBox.setText(message)
         msgBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
         msgBox.exec_()
+        if(msgBox.Ok):
+            global flag
+            flag = True
 
     def insertData(self):
         username=self.uname_lineEdit.text()
@@ -19,6 +25,8 @@ class Ui_signUp(object):
         database.startDB("mysql.djangosfantasy.com", "djangoadmin8", "best!Group")
         database.signupUser(username,password)
         self.showMessageBox('SignUp!', 'SignUp Successful!')
+
+
 
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
@@ -60,6 +68,9 @@ class Ui_signUp(object):
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
+        global flag
+        if flag == True:
+            Dialog.close()
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
