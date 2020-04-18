@@ -4,6 +4,7 @@ from LoginSignUpFolder.arcade import Ui_MainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
 from dbFolder.dbFunctions import nullEscDBClass
 
+global database
 database = nullEscDBClass()
 database.startDB("mysql.djangosfantasy.com", "djangoadmin8", "best!Group")
 
