@@ -183,10 +183,7 @@ def evalGenomes(genomes, config):
         birds.append(Bird(x, y))
         ge.append(gene)
 
-
-# def main():
     playing = True
-#     b = Bird(x, y)
     bg = Bg()
     DIST = 9*width//10
     pipes = [Pipes(5*width), Pipes(5*width + DIST)]
@@ -249,6 +246,8 @@ def evalGenomes(genomes, config):
                     ge.pop(birds.index(b))
                     birds.pop(birds.index(b))
                     break
+            score += 1
+            
             # check for ground collision
             if b.groundCollision() or (b.y > height or b.y < 0):
                 # bg.stop()
@@ -264,7 +263,11 @@ def evalGenomes(genomes, config):
                 ge.pop(birds.index(b))
                 birds.pop(birds.index(b))
 
-
+        if score >= 100:
+            pickle.dump(Nnets[0],open("best.pickle", "wb"))
+            playing = False
+            break
+  
         if pipes[0].passed():
             if not pipes[1].passed():
                 pipes[0], pipes[1] = pipes[1], Pipes(pipes[1].getx() + DIST)
