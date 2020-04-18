@@ -100,13 +100,13 @@ class Ui_MainWindow(object):
         self.label.setText(_translate("MainWindow", "NoleEscape Arcade"))
         self.label_2.setText(_translate("MainWindow", "Choose a game below!"))
     def flappy(self):
-        os.system("python3 Gametry.py")
+        os.system("python Gametry.py")
     def break_out(self):
-        os.system("python3 breakout_test.py")
+        os.system("python breakout_test.py")
     def pong(self):
-        os.system("python3 pypong.py")
+        os.system("python pypong.py")
     def snake(self):
-        os.system("python3 Dsnake.py")
+        os.system("python new_snake.py")
     def AI(self):
         self.AIarcadeWindowShow()
     def HighScore(self):
