@@ -178,7 +178,7 @@ if __name__=="__main__":
         while playing:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    print("\n\ntest\n\n")
+                    #print("\n\ntest\n\n")
                     db.saveScore("Flappy Bird", b.score)
 
                     pygame.quit()
