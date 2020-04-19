@@ -233,7 +233,7 @@ if __name__=="__main__":
                     pipes[1] = Pipes(pipes[0].getx() + DIST)
 
             pygame.display.update()
-        #print("\n\ntest\n\n")
+        print("\n\ntest\n\n")
         db.saveScore("Flappy Bird", score)
         #return score
 
