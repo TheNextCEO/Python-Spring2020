@@ -3,6 +3,7 @@
 import sys, random
 import pygame as py
 from pygame.locals import *
+from dbFolder.dbFunctions import nullEscDBClass
 
 if __name__ == '__main__':
     # Conditions to exit the game
