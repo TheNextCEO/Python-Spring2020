@@ -3,7 +3,10 @@
 import sys, random
 import pygame as py
 from pygame.locals import *
+from dbFolder.dbFunctions import nullEscDBClass
 
+db = nullEscDBClass()
+db.startGameCon()
 if __name__ == '__main__':
     # Conditions to exit the game
     def exitGameCheck():
@@ -283,6 +286,7 @@ if __name__ == '__main__':
             if gameOver:
                 drawGameOver()
                 py.display.update()
+                db.saveScore("Snake", S.score)
                 # Wait for input allows the user to press any key to restart the game
                 waitForInput()
                 del S
