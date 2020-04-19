@@ -178,6 +178,8 @@ if __name__=="__main__":
         while playing:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    db.saveScore("Flappy Bird", b.score)
+
                     pygame.quit()
                     playing = False
 
@@ -233,8 +235,7 @@ if __name__=="__main__":
                     pipes[1] = Pipes(pipes[0].getx() + DIST)
 
             pygame.display.update()
-        print("\n\ntest\n\n")
-        db.saveScore("Flappy Bird", score)
+        #print("\n\ntest\n\n")
         #return score
 
 
