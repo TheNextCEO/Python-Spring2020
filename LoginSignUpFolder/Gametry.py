@@ -3,6 +3,10 @@ if __name__=="__main__":
     import pygame
     import os
     import random
+    from dbFolder.dbFunctions import nullEscDBClass
+
+    db = nullEscDBClass()
+    db.startGameCon()
     pygame.init()
 
     width, height = 300, 540
@@ -229,9 +233,11 @@ if __name__=="__main__":
                     pipes[1] = Pipes(pipes[0].getx() + DIST)
 
             pygame.display.update()
-
+        #print("\n\ntest\n\n")
+        db.saveScore("Flappy Bird", score)
         #return score
 
 
     main()
+
     #print(score)
