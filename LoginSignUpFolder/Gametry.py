@@ -183,7 +183,8 @@ if __name__=="__main__":
 
                     pygame.quit()
                     playing = False
-
+                if playing==False:
+                    break
             keys = pygame.key.get_pressed()
             if keys[pygame.K_SPACE] or b.pipeCollision:
                 b.click()
