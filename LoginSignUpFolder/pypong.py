@@ -1,6 +1,13 @@
+
+
 if __name__=="__main__":
     import turtle
+    from dbFolder.dbFunctions import nullEscDBClass
+    db = nullEscDBClass()
+    db.startGameCon()
 
+    A_true=False
+    B_true=False
     wn=turtle.Screen()
     wn.title("Pong game")
     wn.bgpic("source.gif")
@@ -40,8 +47,8 @@ if __name__=="__main__":
     ball.color("white")
     ball.penup()
     ball.goto(0,0)
-    ball.dx=0.2   #each time you move it moves 2 pixels
-    ball.dy=-0.2
+    ball.dx=0.5   #each time you move it moves 2 pixels
+    ball.dy=-0.5
 
 
     #pen for scoring
@@ -53,6 +60,7 @@ if __name__=="__main__":
     pen.hideturtle() #cause we dont want to see it
     pen.goto(0,260)
     pen.write("Player A: 0 Player B: 0", align="center",font=("Courier",20,"normal"))
+
 
     #Functions to move paddles
 
@@ -127,3 +135,23 @@ if __name__=="__main__":
         if ball.xcor()<-340 and ball.xcor()>-350 and (ball.ycor()<paddle_a.ycor()+40 and ball.ycor()>paddle_a.ycor()-40):
             ball.setx(-340)
             ball.dx *= -1
+
+        if score_a - score_b ==2:
+            pen.clear()
+            pen.write("Player A wins!!!",align="center", font=("Courier", 20, "normal"))
+            A_true=True
+            break
+
+        elif score_a - score_b ==-2:
+            pen.clear()
+            pen.write("Player B wins!!!",align="center", font=("Courier", 20, "normal"))
+            B_true = True
+            break
+        else:
+            pass
+
+
+    if A_true==True:
+        db.saveScore("Pong ", score_a)
+    if B_true==True:
+        db.saveScore("Pong ", score_b)
