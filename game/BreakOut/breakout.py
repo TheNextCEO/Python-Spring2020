@@ -61,7 +61,7 @@ class Block(py.sprite.Sprite):
 class Ball(py.sprite.Sprite):
     """ This class is for the ball """
     # speed of the pixels per cycle
-    speed = 10.0
+    speed = 16.0
 
     # floating point representation of where the ball is
     x = 0.0
@@ -236,6 +236,9 @@ def breakout():
     user = UserKey()
     allsprites.add(user)
 
+    # score keeper
+    score = 0
+
     # the top of the blocks (y position)
     top = 25
 
@@ -282,7 +285,7 @@ def breakout():
 
         # if game over
         if game_over:
-            text = font.render("Game Over", True, red)
+            text = font.render("Game Over: Your Score was " + str(score), True, red)
             textpos = text.get_rect(centerx = background.get_width()/2)
             textpos.top = 300
             screen.blit(text, textpos)
@@ -304,6 +307,7 @@ def breakout():
         # if we hit a block, bounce the ball
         if len(goneBlocks) > 0:
             ball.bounce(0)
+            score += 1
 
             # game ends if all the blocks are gone
             if len(blocks) == 0:

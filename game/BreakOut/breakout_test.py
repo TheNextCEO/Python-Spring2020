@@ -202,7 +202,6 @@ class UserKey(py.sprite.Sprite):
             self.rect.x = 0
 
 
-bg = py.image.load("unnamed.jpg")
 
 
 def breakout():
