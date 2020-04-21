@@ -23,7 +23,7 @@ class Ui_signUp(object):
         database = nullEscDBClass()
 
         database.startDB("mysql.djangosfantasy.com", "djangoadmin8", "best!Group")
-        database.signupUser(username,password)
+        database.signupUser(username,password,email)
         self.showMessageBox('SignUp!', 'SignUp Successful!')
 
 

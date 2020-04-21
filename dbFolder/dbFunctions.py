@@ -20,7 +20,7 @@ startGameCon()                      // Uses the login system from the main to te
                                     // 0: No fileSave.txt
                                     // 1: Connection established.
                                     // 2: incorrect key password, logged in elsewhere
-signupUser(uname, pword)            // Used to add users to the user table
+signupUser(uname, pword, email)     // Used to add users to the user table
                                     // ### Returns ###
                                     // 0: the start function hasn't been used yet.
                                     // 1: username and password accepted.
@@ -181,7 +181,7 @@ class nullEscDBClass(object):
             database = "thenullescdb"
             )
             commands = self.mydbCon.cursor()
-            commands.execute("CREATE TABLE users (id INT AUTO_INCREMENT PRIMARY KEY, uname VARCHAR(255), pword VARCHAR(500), tword VARCHAR(30))")
+            commands.execute("CREATE TABLE users (id INT AUTO_INCREMENT PRIMARY KEY, uname VARCHAR(255), pword VARCHAR(500), email VARCHAR(50), tword VARCHAR(30))")
             commands.execute("CREATE TABLE gameScores (id INT AUTO_INCREMENT PRIMARY KEY, uname VARCHAR(255), game VARCHAR(255), score INT(20))")
             self.dbStarted = 1
             return 1
@@ -237,7 +237,7 @@ class nullEscDBClass(object):
 
 
 
-    def signupUser(self, uname, pword):
+    def signupUser(self, uname, pword, email="NULL"):
         commands = ""
         '''Checking if db has started'''
         if self.dbStarted == 1:
@@ -253,8 +253,8 @@ class nullEscDBClass(object):
                 return 3
             if valid == 1:
                 tempPass = ''.join([random.choice(string.ascii_lowercase + string.digits) for n in range(15)])
-                sql = "INSERT INTO users (uname, pword, tword) VALUES (%s, %s, %s)"
-                input = (uname, pword, tempPass,)
+                sql = "INSERT INTO users (uname, pword, email, tword) VALUES (%s, %s, %s, %s)"
+                input = (uname, pword, email, tempPass,)
                 commands.execute(sql, input)
                 self.mydbCon.commit()
                 self.unameGl = uname
@@ -373,8 +373,9 @@ if __name__=="__main__":
 
     iUser = input("Enter a username: ")
     iPassword = input("Enter a Password: ")
+    emails = input("email: ")
 
-    log = dbTest.signupUser(iUser, iPassword)
+    log = dbTest.signupUser(iUser, iPassword, emails)
     if log == 1:
         print("Login Accepted.\nWelcome back", dbTest.unameGl)
     elif log == 2:
