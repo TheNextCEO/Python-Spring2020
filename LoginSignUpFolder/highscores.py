@@ -6,13 +6,11 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 import os
-
 from dbFolder.dbFunctions import nullEscDBClass
-
 global database
+
 database = nullEscDBClass()
 database.startDB("mysql.djangosfantasy.com", "djangoadmin8", "best!Group")
 print(database.topScores(game = "all", user = 0, amount = 10))
@@ -20,6 +18,18 @@ print(database.topScores(game = "all", user = 0, amount = 10))
 
 
 class Ui_MainWindowHighScore(object):
+    def highflappy(self):
+        os.system("python flappybirdhighscore.py")
+
+    def highpong(self):
+        os.system("python ponghighscore.py")
+
+    def highsnake(self):
+        os.system("python snakehighscore.py")
+
+    def highbreakout(self):
+        os.system("python breakouthighscore.py")
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
@@ -37,15 +47,19 @@ class Ui_MainWindowHighScore(object):
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton.setGeometry(QtCore.QRect(231, 180, 321, 34))
         self.pushButton.setObjectName("pushButton")
+        self.pushButton.clicked.connect(self.highflappy)
         self.pushButton2 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton2.setGeometry(QtCore.QRect(230, 250, 321, 34))
         self.pushButton2.setObjectName("pushButton2")
+        self.pushButton2.clicked.connect(self.highpong)
         self.pushButton3 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton3.setGeometry(QtCore.QRect(230, 320, 321, 34))
         self.pushButton3.setObjectName("pushButton3")
+        self.pushButton3.clicked.connect(self.highbreakout)
         self.pushButton_4 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_4.setGeometry(QtCore.QRect(230, 390, 321, 34))
         self.pushButton_4.setObjectName("pushButton_4")
+        self.pushButton_4.clicked.connect(self.highsnake)
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -55,7 +69,7 @@ class Ui_MainWindowHighScore(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def AIflappy(self):
-        os.system("python3 AIflappybird.py")
+        os.system("python AIflappybird.py")
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
