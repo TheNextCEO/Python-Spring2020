@@ -32,6 +32,8 @@ class Ui_MainWindowAI(object):
         self.pushButton2 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton2.setGeometry(QtCore.QRect(230, 250, 321, 34))
         self.pushButton2.setObjectName("pushButton2")
+        self.pushButton2.clicked.connect(self.AIbreakout)
+
         # self.pushButton3 = QtWidgets.QPushButton(self.centralwidget)
         # self.pushButton3.setGeometry(QtCore.QRect(230, 320, 321, 34))
         # self.pushButton3.setObjectName("pushButton3")
@@ -47,6 +49,9 @@ class Ui_MainWindowAI(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def AIflappy(self):
+        os.system("python3 AIflappybird.py")
+
+    def AIbreakout(self):
         os.system("python3 AIflappybird.py")
 
     def retranslateUi(self, MainWindow):
