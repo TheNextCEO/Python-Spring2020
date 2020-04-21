@@ -1,10 +1,10 @@
 from dbFolder.dbFunctions import nullEscDBClass
-
+from PyQt5 import QtCore, QtGui, QtWidgets
 global database
 database = nullEscDBClass()
 database.startDB("mysql.djangosfantasy.com", "djangoadmin8", "best!Group")
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Highscores(object):
     def load(self):

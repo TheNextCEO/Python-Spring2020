@@ -19,16 +19,16 @@ print(database.topScores(game = "all", user = 0, amount = 10))
 
 class Ui_MainWindowHighScore(object):
     def highflappy(self):
-        os.system("python3 flappybirdhighscore.py")
+        os.system("python flappybirdhighscore.py")
 
     def highpong(self):
-        os.system("python3 ponghighscore.py")
+        os.system("python ponghighscore.py")
 
     def highsnake(self):
-        os.system("python3 snakehighscore.py")
+        os.system("python snakehighscore.py")
 
     def highbreakout(self):
-        os.system("python3 breakouthighscore.py")
+        os.system("python breakouthighscore.py")
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -69,7 +69,7 @@ class Ui_MainWindowHighScore(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def AIflappy(self):
-        os.system("python3 AIflappybird.py")
+        os.system("python AIflappybird.py")
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
