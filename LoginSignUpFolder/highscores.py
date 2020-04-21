@@ -10,6 +10,13 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import os
 
+from dbFolder.dbFunctions import nullEscDBClass
+
+global database
+database = nullEscDBClass()
+database.startDB("mysql.djangosfantasy.com", "djangoadmin8", "best!Group")
+print(database.topScores(game = "all", user = 0, amount = 10))
+
 
 
 class Ui_MainWindowHighScore(object):
