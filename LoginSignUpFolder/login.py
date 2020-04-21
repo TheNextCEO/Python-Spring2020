@@ -1,5 +1,5 @@
 import sqlite3
-from LoginSignUpFolder.signup import Ui_signUp
+from LoginSignUpFolder.signup import *
 from LoginSignUpFolder.arcade import Ui_MainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
 from dbFolder.dbFunctions import nullEscDBClass
@@ -21,6 +21,7 @@ class Ui_Dialog(object):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self.arcadeWindow)
         self.arcadeWindow.show()
+
     def signUpShow(self):
         self.signUpWindow=QtWidgets.QDialog()
         self.ui=Ui_signUp()
@@ -85,10 +86,6 @@ class Ui_Dialog(object):
         self.pass_lineEdit.setGeometry(QtCore.QRect(270, 220, 171, 31))
 
         self.pass_lineEdit.setObjectName("pass_lineEdit")
-        #
-
-
-        #
 
         self.login_btn = QtWidgets.QPushButton(Dialog)
 
@@ -111,7 +108,7 @@ class Ui_Dialog(object):
 
         self.label = QtWidgets.QLabel(Dialog)
 
-        self.label.setGeometry(QtCore.QRect(180, 70, 241, 41))
+        self.label.setGeometry(QtCore.QRect(220, 70, 241, 41))
 
         font = QtGui.QFont()
 
@@ -128,7 +125,7 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
 
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        Dialog.setWindowTitle(_translate("Dialog", "Login"))
 
         self.u_name_label.setText(_translate("Dialog", "Username:"))
 

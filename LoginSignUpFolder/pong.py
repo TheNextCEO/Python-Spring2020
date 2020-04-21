@@ -33,7 +33,7 @@ class pongGame(object):
 
     def setuppong(self):
         self.wn=turtle.Screen()
-        self.wn.title("Pong game")
+        self.wn.title("Pong")
         self.wn.bgpic("source.gif")
         self.wn.update()
         self.wn.setup(width=800,height=600)

@@ -89,12 +89,12 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "NoleEscape Arcade"))
         self.pushButton_2.setText(_translate("MainWindow", "Flappy Bird"))
         self.pushButton_5.setText(_translate("MainWindow", "Pong"))
         self.pushButton_3.setText(_translate("MainWindow", "Snake"))
-        self.pushButton_4.setText(_translate("MainWindow", "Nole Escape"))
-        self.pushButton.setText(_translate("MainWindow", "AI versions"))
+        self.pushButton_4.setText(_translate("MainWindow", "Break Out"))
+        self.pushButton.setText(_translate("MainWindow", "AI Versions"))
         self.pushButton_6.setText(_translate("MainWindow", "High Scores"))
 
         self.label.setText(_translate("MainWindow", "NoleEscape Arcade"))

@@ -1,5 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from dbFolder.dbFunctions import nullEscDBClass
+from LoginSignUpFolder.login import *
 
 global flag
 flag = False
@@ -16,6 +17,9 @@ class Ui_signUp(object):
             global flag
             flag = True
 
+
+
+
     def insertData(self):
         username=self.uname_lineEdit.text()
         email=self.email_lineEdit.text()
@@ -26,7 +30,11 @@ class Ui_signUp(object):
         database.signupUser(username,password,email)
         self.showMessageBox('SignUp!', 'SignUp Successful!')
 
-
+    def gotologin(self):
+        self.loginWindow = QtWidgets.QDialog()
+        self.ui = Ui_Dialog()
+        self.ui.setupUi(self.loginWindow)
+        self.loginWindow.show()
 
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
@@ -58,9 +66,11 @@ class Ui_signUp(object):
         self.signup_btn.setObjectName("signup_btn")
         #########################Event##################
         self.signup_btn.clicked.connect(self.insertData)
+        self.signup_btn.clicked.connect(self.gotologin)
+
         ############################################
         self.label_2 = QtWidgets.QLabel(Dialog)
-        self.label_2.setGeometry(QtCore.QRect(170, 30, 400, 41))
+        self.label_2.setGeometry(QtCore.QRect(140, 30, 400, 41))
         font = QtGui.QFont()
         font.setPointSize(15)
         self.label_2.setFont(font)
@@ -72,9 +82,11 @@ class Ui_signUp(object):
         if flag == True:
             Dialog.close()
 
+
+
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        Dialog.setWindowTitle(_translate("Dialog", "Sign Up"))
         self.u_name_label.setText(_translate("Dialog", "Username:"))
         self.pass_label.setText(_translate("Dialog", "Password:"))
         self.u_name_label_2.setText(_translate("Dialog", "E-mail Address:"))

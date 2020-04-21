@@ -19,16 +19,16 @@ print(database.topScores(game = "all", user = 0, amount = 10))
 
 class Ui_MainWindowHighScore(object):
     def highflappy(self):
-        os.system("python flappybirdhighscore.py")
+        os.system("python3 flappybirdhighscore.py")
 
     def highpong(self):
-        os.system("python ponghighscore.py")
+        os.system("python3 ponghighscore.py")
 
     def highsnake(self):
-        os.system("python snakehighscore.py")
+        os.system("python3 snakehighscore.py")
 
     def highbreakout(self):
-        os.system("python breakouthighscore.py")
+        os.system("python3 breakouthighscore.py")
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -36,10 +36,10 @@ class Ui_MainWindowHighScore(object):
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(270, 60, 251, 19))
+        self.label.setGeometry(QtCore.QRect(300, 60, 251, 19))
         self.label.setObjectName("label")
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
-        self.label_2.setGeometry(QtCore.QRect(280, 90, 221, 20))
+        self.label_2.setGeometry(QtCore.QRect(310, 90, 221, 20))
         self.label_2.setObjectName("label_2")
         self.listView = QtWidgets.QListView(self.centralwidget)
         self.listView.setGeometry(QtCore.QRect(230, 140, 321, 331))
@@ -69,11 +69,11 @@ class Ui_MainWindowHighScore(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def AIflappy(self):
-        os.system("python AIflappybird.py")
+        os.system("python3 AIflappybird.py")
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Highscores"))
         self.label.setText(_translate("MainWindow", "NoleEscape Arcade Highscores"))
         self.label_2.setText(_translate("MainWindow", "Click below to choose a Game"))
         self.pushButton.setText(_translate("MainWindow", "Flappy Bird"))

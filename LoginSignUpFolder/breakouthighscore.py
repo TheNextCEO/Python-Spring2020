@@ -71,7 +71,7 @@ class Ui_Highscores(object):
 
     def retranslateUi(self, Highscores):
         _translate = QtCore.QCoreApplication.translate
-        Highscores.setWindowTitle(_translate("Highscores", "MainWindow"))
+        Highscores.setWindowTitle(_translate("Highscores", "Break Out Highscores"))
         self.label.setText(_translate("Highscores", "User"))
         self.label_2.setText(_translate("Highscores", "High Score"))
         self.pushButton.setText(_translate("Highscores", "Load High Scores"))

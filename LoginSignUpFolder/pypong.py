@@ -9,7 +9,7 @@ if __name__=="__main__":
     A_true=False
     B_true=False
     wn=turtle.Screen()
-    wn.title("Pong game")
+    wn.title("Pong")
     wn.bgpic("source.gif")
     wn.update()
     wn.setup(width=800,height=600)
