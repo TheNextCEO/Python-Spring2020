@@ -1,4 +1,3 @@
-import sqlite3
 from LoginSignUpFolder.signup import *
 from LoginSignUpFolder.arcade import Ui_MainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -92,19 +91,14 @@ class Ui_Dialog(object):
         self.login_btn.setGeometry(QtCore.QRect(200, 290, 101, 31))
 
         self.login_btn.setObjectName("login_btn")
-        ############################### Button Event ######################
         self.login_btn.clicked.connect(self.loginCheck)
-        #created a method that takes in one argument, a function that is called when you click the button
-        ##################################################################
+
         self.signup_btn = QtWidgets.QPushButton(Dialog)
 
         self.signup_btn.setGeometry(QtCore.QRect(340, 290, 101, 31))
 
         self.signup_btn.setObjectName("signup_btn")
-        ############################### Button Event ######################
         self.signup_btn.clicked.connect(self.signupCheck)
-        # created a method that takes in one argument, a function that is called when you click the button
-        ############################################################
 
         self.label = QtWidgets.QLabel(Dialog)
 

@@ -223,10 +223,7 @@ if __name__=="__main__":
                     b.pipeCollision = True
                     b.vx = -5
                     b.vy = 100
-                    # b.g = 30
-                    # while b.y >= 480:
-                    #     b.move()
-                    # print("b.vy ", b.vy)
+
                     break
 
             if pipes[0].passed():
@@ -237,10 +234,6 @@ if __name__=="__main__":
                     pipes[1] = Pipes(pipes[0].getx() + DIST)
 
             pygame.display.update()
-        #print("\n\ntest\n\n")
-        #return score
-
 
     main()
 
-    #print(score)

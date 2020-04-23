@@ -1,12 +1,3 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'AIarcade.ui'
-#
-# Created by: PyQt5 UI code generator 5.14.2
-#
-# WARNING! All changes made in this file will be lost!
-
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 import os
 
@@ -33,13 +24,6 @@ class Ui_MainWindowAI(object):
         self.pushButton2.setGeometry(QtCore.QRect(230, 250, 321, 34))
         self.pushButton2.setObjectName("pushButton2")
         self.pushButton2.clicked.connect(self.AIbreakout)
-
-        # self.pushButton3 = QtWidgets.QPushButton(self.centralwidget)
-        # self.pushButton3.setGeometry(QtCore.QRect(230, 320, 321, 34))
-        # self.pushButton3.setObjectName("pushButton3")
-        # self.pushButton_4 = QtWidgets.QPushButton(self.centralwidget)
-        # self.pushButton_4.setGeometry(QtCore.QRect(230, 390, 321, 34))
-        # self.pushButton_4.setObjectName("pushButton_4")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -61,8 +45,6 @@ class Ui_MainWindowAI(object):
         self.label_2.setText(_translate("MainWindow", "Click below to choose a Game"))
         self.pushButton.setText(_translate("MainWindow", "Flappy Bird"))
         self.pushButton2.setText(_translate("MainWindow", "Break Out"))
-        #self.pushButton3.setText(_translate("MainWindow", "Break out"))
-        #self.pushButton_4.setText(_translate("MainWindow", "Classic Snake"))
 
 
 if __name__ == "__main__":

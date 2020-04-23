@@ -1,5 +1,3 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
-from dbFolder.dbFunctions import nullEscDBClass
 from LoginSignUpFolder.login import *
 
 global flag
@@ -16,9 +14,6 @@ class Ui_signUp(object):
         if(msgBox.Ok):
             global flag
             flag = True
-
-
-
 
     def insertData(self):
         username=self.uname_lineEdit.text()
@@ -64,11 +59,9 @@ class Ui_signUp(object):
         self.signup_btn = QtWidgets.QPushButton(Dialog)
         self.signup_btn.setGeometry(QtCore.QRect(290, 280, 81, 31))
         self.signup_btn.setObjectName("signup_btn")
-        #########################Event##################
         self.signup_btn.clicked.connect(self.insertData)
         self.signup_btn.clicked.connect(self.gotologin)
 
-        ############################################
         self.label_2 = QtWidgets.QLabel(Dialog)
         self.label_2.setGeometry(QtCore.QRect(140, 30, 400, 41))
         font = QtGui.QFont()

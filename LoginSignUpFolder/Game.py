@@ -1,13 +1,5 @@
 import pygame
-import os
 import random
-
-
-
-
-#class flappy_bird:
-    #def __init__(self):
-
 
 width, height = 300, 540
 

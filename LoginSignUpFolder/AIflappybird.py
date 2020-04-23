@@ -118,7 +118,6 @@ if __name__ == "__main__":
                 return True
 
         def stop(self):
-            # self.y = height - height//20 - height//20
             self.vy = 0
             self.vx = 0
 
@@ -173,13 +172,6 @@ if __name__ == "__main__":
 
 
     def main():
-        # config = neat.Config(
-        # neat.DefaultGenome,
-        # neat.DefaultReproduction,
-        # neat.DefaultSpeciesSet,
-        # neat.DefaultStagnation,
-        # 'config'
-        # )
 
         Nnets = pickle.load(open('FlappyBest.pickle', 'rb'))
 
@@ -192,17 +184,14 @@ if __name__ == "__main__":
         while playing:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    # print(b.score)
-                    # print("test")
+
                     pygame.quit()
                     playing = False
 
                 if playing == False:
                     break
 
-            # keys = pygame.key.get_pressed()
-            # if keys[pygame.K_SPACE] or b.pipeCollision:
-            #     b.click()
+
             activatedNodeVal = Nnets.activate((b.y, abs(b.y - pipes[0].top), abs(b.y - pipes[0].bottom)))
 
             if activatedNodeVal[0] > 0.5:
@@ -254,8 +243,6 @@ if __name__ == "__main__":
             pygame.display.update()
         print(b.score)
         print("test")
-        # return score
 
 
     main()
-    # print(score)

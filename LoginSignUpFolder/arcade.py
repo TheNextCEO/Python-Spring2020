@@ -1,19 +1,7 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'arcade.ui'
-#
-# Created by: PyQt5 UI code generator 5.14.1
-#
-# WARNING! All changes made in this file will be lost!
-
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 from LoginSignUpFolder.AIarcade import Ui_MainWindowAI
 from LoginSignUpFolder.highscores import Ui_MainWindowHighScore
-#import LoginSignUpFolder.Game.py as flappy
-import LoginSignUpFolder.Gametry
 import os
-import pygame
 
 
 class Ui_MainWindow(object):
