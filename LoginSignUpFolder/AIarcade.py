@@ -52,7 +52,7 @@ class Ui_MainWindowAI(object):
         os.system("python3 AIflappybird.py")
 
     def AIbreakout(self):
-        os.system("python3 AIflappybird.py")
+        os.system("python3 AIBreakOut.py")
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
