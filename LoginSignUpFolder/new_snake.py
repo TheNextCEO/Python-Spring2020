@@ -33,7 +33,7 @@ if __name__ == '__main__':
             self.direction = "right"
             self.x = CUBEWIDTH // 2
             self.y = CUBEHEIGHT // 2
-            #
+
             # Creates an initial body with three cubes
             self.snakeBody = [{'x': self.x, 'y': self.y},
                               {'x': self.x - 1, 'y': self.y},
@@ -58,6 +58,7 @@ if __name__ == '__main__':
             elif move[K_DOWN] and self.direction != "up":
                 self.direction = "down"
 
+            # Checks for self collision (Game over) and wall collision (wrap snake)
             collisionFlag = self.selfCollision()
             wallFlag = self.wallCollision()
 
@@ -66,9 +67,11 @@ if __name__ == '__main__':
             for appleIndex in self.applePos:
                 if appleIndex['x'] == self.snakeBody[0]['x'] and appleIndex['y'] == self.snakeBody[0]['y']:
                     # Makes the snake go faster for every apple eaten
+                    # Does not go lower than a 50ms delay
                     if snakeSpeed >= 50:
                         snakeSpeed -= 2
-                    # Deletes the apple that was ate.
+
+                    # Deletes the apple that was ate and adjusts variables to reflect the change.
                     self.applePos.remove(appleIndex)
                     foundApple = True
                     self.appleCount -= 1
@@ -113,8 +116,9 @@ if __name__ == '__main__':
 
             return False
 
+        # This detects if the head hits a wall
         def wallCollision(self):
-            # If the head (0 location in the list) hits any wall, game over.
+            # If the head (0 location in the list) hits any wall, change head position to opposite wall.
             if self.snakeBody[0]['x'] == 0 and self.direction == "left":
                 return True
             elif self.snakeBody[0]['x'] == CUBEWIDTH-1 and self.direction == "right":
@@ -132,7 +136,7 @@ if __name__ == '__main__':
             y = self.snakeBody[0]['y'] * CUBESIZE
             py.draw.rect(WIN, BLUE, (x, y, CUBESIZE, CUBESIZE))
 
-            #
+            # This displays the eyes based on the current direction of the snake
             if self.direction == "left":
                 py.draw.rect(WIN, BLACK, (x + 3, y + 3, CUBESIZE // 4, CUBESIZE // 4))
                 py.draw.rect(WIN, BLACK, (x + 3, y + CUBESIZE - 7, CUBESIZE // 4, CUBESIZE // 4))
@@ -151,6 +155,8 @@ if __name__ == '__main__':
             for cube in self.snakeBody[1:]:
                 x = cube['x'] * CUBESIZE
                 y = cube['y'] * CUBESIZE
+
+                # Alternates color of each section of the snake
                 if counter % 2 == 1:
                     py.draw.rect(WIN, BLACK, (x, y, CUBESIZE, CUBESIZE))
                 else:
@@ -167,6 +173,7 @@ if __name__ == '__main__':
                 # Used for a 10% chance
                 appleRNG = random.randint(1, 10)
 
+                # 90% of the time only one apple is made
                 if appleRNG > 1:
                     posCheck = True
                     # Creates new apple positions until the apple does not occupy the same positions as the snake
@@ -176,12 +183,15 @@ if __name__ == '__main__':
                             if possibleApple['x'] == self.snakeBody[cube]['x'] and possibleApple['y'] == self.snakeBody[cube]['y']:
                                 posCheck = False
 
+                        # If the apple position is not on a snake body part, add the apple to the game.
                         if posCheck:
                             appleList.append(possibleApple)
                             self.appleCount += 1
                             return appleList
                         else:
                             posCheck = True
+
+                # 10% chance to create 5 purple apples
                 else:
                     posCheck = True
                     # Creates new apple positions until the apple does not occupy the same positions as the snake
@@ -191,6 +201,7 @@ if __name__ == '__main__':
                             if possibleApple['x'] == self.snakeBody[cube]['x'] and possibleApple['y'] == self.snakeBody[cube]['y']:
                                 posCheck = False
 
+                        # If the apple position is not on a snake body part, add the apple to the game.
                         if posCheck:
                             appleList.append(possibleApple)
                             self.appleCount += 1
@@ -202,23 +213,26 @@ if __name__ == '__main__':
             else:
                 return self.applePos
 
-
+        # Draws the apple on the screen based on the x,y positions
         def drawApple(self):
             for apple in self.applePos:
                 x = apple['x'] * CUBESIZE
                 y = apple['y'] * CUBESIZE
+
+                # If there is more than one apple color them purple
                 if self.appleCount == 1:
                     py.draw.rect(WIN, RED, (x, y, CUBESIZE, CUBESIZE))
                 else:
                     py.draw.rect(WIN, PURPLE, (x, y, CUBESIZE, CUBESIZE))
 
+        # Draws the score on the screen
         def drawScore(self):
             scoreSurf = SCOREFONT.render('Score: %s' % (self.score), True, BLACK)
             scoreRect = scoreSurf.get_rect()
             scoreRect.topright = (width, 0)
             WIN.blit(scoreSurf, scoreRect)
 
-        # Moves and draws the snake
+        # Moves and draws the snake, apple, and score.
         def do(self):
             # Returns true if collisions occur.
             collisionFlag = self.movement()
@@ -226,9 +240,10 @@ if __name__ == '__main__':
             self.drawApple()
             self.drawScore()
 
+            # If collision flag is true, game over.
             return collisionFlag
 
-
+    # Draws game over message to the screen
     def drawGameOver():
         gameOverSurf = GAMEOVERFONT.render('GAME OVER', True, BLACK)
         gameOverRect = gameOverSurf.get_rect()
@@ -254,6 +269,8 @@ if __name__ == '__main__':
     CUBEWIDTH = int(width / CUBESIZE)
     CUBEHEIGHT = int(height / CUBESIZE)
 
+    # Keeps track of the snake speed, this is a delay between frames.
+    # A lower number is faster.
     snakeSpeed = 100
 
 
@@ -274,6 +291,7 @@ if __name__ == '__main__':
 
         running = True
 
+        # Main game loop
         while running:
             # Delay between each re-draw
             py.time.delay(snakeSpeed)
@@ -286,9 +304,14 @@ if __name__ == '__main__':
             if gameOver:
                 drawGameOver()
                 py.display.update()
+
+                # Saves the current users score to the highscores with their information
                 db.saveScore("Snake", S.score)
+
                 # Wait for input allows the user to press any key to restart the game
                 waitForInput()
+
+                # Resets the snake object and the speed variable to get ready for the next game.
                 del S
                 S = Snake()
                 snakeSpeed = 100
@@ -296,5 +319,6 @@ if __name__ == '__main__':
             py.display.update()
             CLOCK.tick(FPS)
             WIN.fill(WHITE)
+
     Game()
     py.quit()
